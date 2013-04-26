@@ -1,0 +1,248 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		036C85B316E9C110009FECB1 /* getopt_long.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 036C85AD16E9C110009FECB1 /* getopt_long.cpp */; };
+		036C85B416E9C110009FECB1 /* psurfviewer_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 036C85AF16E9C110009FECB1 /* psurfviewer_main.cpp */; };
+		036C85B516E9C110009FECB1 /* SurfaceGeometry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 036C85B116E9C110009FECB1 /* SurfaceGeometry.cpp */; };
+		036C85B716E9C132009FECB1 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036C85B616E9C132009FECB1 /* GLUT.framework */; };
+		036C85B916E9C13C009FECB1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036C85B816E9C13C009FECB1 /* OpenGL.framework */; };
+		03C31E5E172A378B00AF556F /* simple.fs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03C31E56172A376C00AF556F /* simple.fs */; };
+		03C31E5F172A378B00AF556F /* simple.vs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03C31E57172A376C00AF556F /* simple.vs */; };
+		03C31E60172A378B00AF556F /* simpleShader.fs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03C31E58172A376C00AF556F /* simpleShader.fs */; };
+		03C31E61172A378B00AF556F /* simpleShader.vs in CopyFiles */ = {isa = PBXBuildFile; fileRef = 03C31E59172A376C00AF556F /* simpleShader.vs */; };
+		03C31E64172A37B300AF556F /* GLSLShader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 03C31E62172A379C00AF556F /* GLSLShader.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		036C859E16E9C0C9009FECB1 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
+			files = (
+				03C31E5E172A378B00AF556F /* simple.fs in CopyFiles */,
+				03C31E5F172A378B00AF556F /* simple.vs in CopyFiles */,
+				03C31E60172A378B00AF556F /* simpleShader.fs in CopyFiles */,
+				03C31E61172A378B00AF556F /* simpleShader.vs in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		036C85A016E9C0C9009FECB1 /* psurfviewer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = psurfviewer; sourceTree = BUILT_PRODUCTS_DIR; };
+		036C85AD16E9C110009FECB1 /* getopt_long.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = getopt_long.cpp; path = ../getopt_long.cpp; sourceTree = "<group>"; };
+		036C85AE16E9C110009FECB1 /* getopt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = getopt.h; path = ../getopt.h; sourceTree = "<group>"; };
+		036C85AF16E9C110009FECB1 /* psurfviewer_main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = psurfviewer_main.cpp; path = ../psurfviewer_main.cpp; sourceTree = "<group>"; };
+		036C85B016E9C110009FECB1 /* SGFaceList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SGFaceList.h; path = ../SGFaceList.h; sourceTree = "<group>"; };
+		036C85B116E9C110009FECB1 /* SurfaceGeometry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SurfaceGeometry.cpp; path = ../SurfaceGeometry.cpp; sourceTree = "<group>"; };
+		036C85B216E9C110009FECB1 /* SurfaceGeometry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SurfaceGeometry.h; path = ../SurfaceGeometry.h; sourceTree = "<group>"; };
+		036C85B616E9C132009FECB1 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		036C85B816E9C13C009FECB1 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		03C31E56172A376C00AF556F /* simple.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = simple.fs; path = ../simple.fs; sourceTree = "<group>"; };
+		03C31E57172A376C00AF556F /* simple.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = simple.vs; path = ../simple.vs; sourceTree = "<group>"; };
+		03C31E58172A376C00AF556F /* simpleShader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = simpleShader.fs; path = ../simpleShader.fs; sourceTree = "<group>"; };
+		03C31E59172A376C00AF556F /* simpleShader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = simpleShader.vs; path = ../simpleShader.vs; sourceTree = "<group>"; };
+		03C31E62172A379C00AF556F /* GLSLShader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = GLSLShader.cpp; path = ../GLSLShader.cpp; sourceTree = "<group>"; };
+		03C31E63172A379C00AF556F /* GLSLShader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = GLSLShader.h; path = ../GLSLShader.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		036C859D16E9C0C9009FECB1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				036C85B916E9C13C009FECB1 /* OpenGL.framework in Frameworks */,
+				036C85B716E9C132009FECB1 /* GLUT.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		036C859516E9C0C9009FECB1 = {
+			isa = PBXGroup;
+			children = (
+				036C85B816E9C13C009FECB1 /* OpenGL.framework */,
+				036C85B616E9C132009FECB1 /* GLUT.framework */,
+				036C85AD16E9C110009FECB1 /* getopt_long.cpp */,
+				036C85AE16E9C110009FECB1 /* getopt.h */,
+				036C85AF16E9C110009FECB1 /* psurfviewer_main.cpp */,
+				036C85B016E9C110009FECB1 /* SGFaceList.h */,
+				036C85B116E9C110009FECB1 /* SurfaceGeometry.cpp */,
+				036C85B216E9C110009FECB1 /* SurfaceGeometry.h */,
+				03C31E62172A379C00AF556F /* GLSLShader.cpp */,
+				03C31E63172A379C00AF556F /* GLSLShader.h */,
+				03C31E56172A376C00AF556F /* simple.fs */,
+				03C31E57172A376C00AF556F /* simple.vs */,
+				03C31E58172A376C00AF556F /* simpleShader.fs */,
+				03C31E59172A376C00AF556F /* simpleShader.vs */,
+				036C85A116E9C0C9009FECB1 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		036C85A116E9C0C9009FECB1 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				036C85A016E9C0C9009FECB1 /* psurfviewer */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		036C859F16E9C0C9009FECB1 /* psurfviewer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 036C85AA16E9C0C9009FECB1 /* Build configuration list for PBXNativeTarget "psurfviewer" */;
+			buildPhases = (
+				036C859C16E9C0C9009FECB1 /* Sources */,
+				036C859D16E9C0C9009FECB1 /* Frameworks */,
+				036C859E16E9C0C9009FECB1 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = psurfviewer;
+			productName = psurfviewer;
+			productReference = 036C85A016E9C0C9009FECB1 /* psurfviewer */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		036C859716E9C0C9009FECB1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Michael Shafae";
+			};
+			buildConfigurationList = 036C859A16E9C0C9009FECB1 /* Build configuration list for PBXProject "psurfviewer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 036C859516E9C0C9009FECB1;
+			productRefGroup = 036C85A116E9C0C9009FECB1 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				036C859F16E9C0C9009FECB1 /* psurfviewer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		036C859C16E9C0C9009FECB1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				03C31E64172A37B300AF556F /* GLSLShader.cpp in Sources */,
+				036C85B316E9C110009FECB1 /* getopt_long.cpp in Sources */,
+				036C85B416E9C110009FECB1 /* psurfviewer_main.cpp in Sources */,
+				036C85B516E9C110009FECB1 /* SurfaceGeometry.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		036C85A816E9C0C9009FECB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		036C85A916E9C0C9009FECB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		036C85AB16E9C0C9009FECB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		036C85AC16E9C0C9009FECB1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		036C859A16E9C0C9009FECB1 /* Build configuration list for PBXProject "psurfviewer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				036C85A816E9C0C9009FECB1 /* Debug */,
+				036C85A916E9C0C9009FECB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		036C85AA16E9C0C9009FECB1 /* Build configuration list for PBXNativeTarget "psurfviewer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				036C85AB16E9C0C9009FECB1 /* Debug */,
+				036C85AC16E9C0C9009FECB1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 036C859716E9C0C9009FECB1 /* Project object */;
+}
