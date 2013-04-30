@@ -46,6 +46,7 @@
  /* Tranguloid Trefoil and other example surfaces by Roger Bagula see <http://astronomy.swin.edu.au/~pbourke/surfaces/> */
 // New URL <http://paulbourke.net/geometry/>
 
+#define _USE_MATH_DEFINES
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
