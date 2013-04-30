@@ -1,5 +1,4 @@
 #include "myGL.h"
-#include <stack>
 
 /* Do not edit these variables. */
 bool myMatrixModeOn;
@@ -10,8 +9,6 @@ bool myLookAtOn;
 bool myFrustumOn;
 bool myPerspectiveOn;
 bool myOrthoOn;
-std::stack<Mat3>* myProjectionStack;
-std::stack<Mat3>* myModelingStack;
 int _myMatrixMode;
 
 /* To toggle something on or off, change from false to true. */
@@ -24,11 +21,11 @@ void myGLInit( ){
   myFrustumOn = false;
   myPerspectiveOn = false;
   myOrthoOn = false;
-  if( myMatrixModeOn ){
+  /*if( myMatrixModeOn ){
     myProjectionStack = new std::stack<Mat3>( );
     myModelingStack = new std::stack<Mat3>( );
     glGetIntegerv(GL_MATRIX_MODE, &_myMatrixMode);
-  }
+  }*/
 }
 
 void myMatrixMode( GLenum mode ){
@@ -93,11 +90,7 @@ void myRotatef( float angle, float x, float y, float z){
 		 
 void myScalef(float x, float y, float z ){
   if(myScaleOn){
-    double m[16];
-    Mat3 aUniformScale = uniformScale(double(x));
-    // copy aUniformScale into m
-    copyToFourByFourMatrix(m, aUniformScale);
-    glMultMatrixd(m);
+    // your code here
   }else{
     glScalef(x, y, z);
   }

@@ -12,21 +12,22 @@
  *
  */
 
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
-#include <cassert>
-#include <vector>
-
 #ifdef __APPLE__
 /* Apple's weird location of their OpenGL & GLUT implementation */
 #include <OpenGL/OpenGL.h>
 #include <OpenGL/gl.h>
 #include <OpenGL/glu.h>
 #else
+#include <GL/glew.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #endif
+
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <cassert>
+#include <vector>
 
 #define myglError( ) _myglError( stderr, __FILE__, __LINE__ )
 
@@ -43,7 +44,7 @@ public:
 
   ~Shader( );
 
-  bool compileShader( const GLchar *src );
+  bool compileShader( const char *src );
   
   char* getInfoLog( );
 };

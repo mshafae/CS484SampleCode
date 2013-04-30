@@ -56,7 +56,7 @@ Shader::~Shader( ){
   myglError( );
 }
 
-bool Shader::compileShader( const GLchar *src ){
+bool Shader::compileShader( const char *src ){
   GLint compiled_ok;
   char *msg;
   GLint length = (GLint)strlen(src);

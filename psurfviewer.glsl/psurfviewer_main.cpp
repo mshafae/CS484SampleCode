@@ -4,6 +4,7 @@
 #include <GLUT/glut.h>
 #include <OpenGL/OpenGL.h>
 #else
+#include <GL/glew.h>
 #include <GL/glut.h>
 #include <GL/gl.h>
 #endif
@@ -57,6 +58,9 @@ void init( void )
      gTranslation[i] = 0.0f;
      gScaleFactor[i] = 1.0f;
    }
+#ifdef WIN32
+   glewInit( );
+#endif
    // simple
    //const char* vs_file = "simple.vs";
    //const char* fs_file = "simple.fs";
@@ -278,7 +282,7 @@ int main(int argc, char** argv){
   }
 
   glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
-  glutInitWindowSize( 800, 800 ); 
+  glutInitWindowSize( 600, 600 ); 
   glutInitWindowPosition( 100, 100 );
   glutCreateWindow( argv[0] );
 

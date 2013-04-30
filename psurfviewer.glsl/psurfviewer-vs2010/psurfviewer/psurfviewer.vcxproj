@@ -45,7 +45,16 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>glew32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ShowProgress>LinkVerbose</ShowProgress>
     </Link>
+    <PostBuildEvent>
+      <Command>copy $(SolutionDir)..\*.fs $(SolutionDir)\$(ProjectName);
+copy $(SolutionDir)..\*.vs $(SolutionDir)\$(ProjectName)</Command>
+    </PostBuildEvent>
+    <PostBuildEvent>
+      <Message>Copy shader code to target configuration directory.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -62,13 +71,23 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\getopt.h" />
+    <ClInclude Include="..\..\GLSLShader.h" />
+    <ClInclude Include="..\..\myGL.h" />
     <ClInclude Include="..\..\SGFaceList.h" />
     <ClInclude Include="..\..\SurfaceGeometry.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\getopt_long.cpp" />
+    <ClCompile Include="..\..\GLSLShader.cpp" />
+    <ClCompile Include="..\..\myGL.cpp" />
     <ClCompile Include="..\..\psurfviewer_main.cpp" />
     <ClCompile Include="..\..\SurfaceGeometry.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\simple.fs" />
+    <None Include="..\..\simple.vs" />
+    <None Include="..\..\simpleShader.fs" />
+    <None Include="..\..\simpleShader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

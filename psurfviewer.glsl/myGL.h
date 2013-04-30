@@ -11,9 +11,7 @@
 #include <GL/gl.h>
 #endif
 
-#include "myGL.h"
-#include "Vec3.h"
-#include "Mat3.h"
+#include <cstdio>
 
 /* Initialize your mini-GL library */
 void myGLInit( );
