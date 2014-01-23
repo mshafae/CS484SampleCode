@@ -65,8 +65,11 @@ void init( void )
    //const char* vs_file = "simple.vs";
    //const char* fs_file = "simple.fs";
    // Simple Shader (like asgt. 2)
-   const char* vs_file = "simpleShader.vs";
-   const char* fs_file = "simpleShader.fs";
+   //const char* vs_file = "simpleShader.vs";
+   //const char* fs_file = "simpleShader.fs";
+   const char* vs_file = "phong.vs";
+   const char* fs_file = "phong.fs";
+   
    
    VertexShader vertexShader(vs_file);
    FragmentShader fragmentShader(fs_file);
