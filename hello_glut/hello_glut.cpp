@@ -10,7 +10,9 @@
 
 #include <cstdlib>
 #include <cstdio>
+#ifndef WIN32
 #include <sys/time.h>
+#endif
 
 #include <GL/glew.h>
 
