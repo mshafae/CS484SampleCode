@@ -5,7 +5,7 @@
 // A really simple GLUT demo that renders an animated and
 // colored tetrahedron which the edges outlined in black.
 //
-// $Id: hello_glut.cpp 4759 2014-01-23 07:42:48Z mshafae $
+// $Id: hello_glut.cpp 4782 2014-01-29 07:47:59Z mshafae $
 //
 
 #include <cstdlib>
@@ -127,7 +127,24 @@ void drawTetrahedron(void){
   glEnd( );
 }
 
-
+#ifdef WIN32
+#include <windows.h>
+double winGetElapsedTime( ){
+  LARGE_INTEGER frequency;
+  LARGE_INTEGER now;
+  static char firstTime = 1;
+  static double resolution;
+  static double start;
+  if( firstTime ){
+    // initialize
+    QueryPerformanceFrequency(frequency);
+    resolution = 1.0 / double(frequency);
+    QueryPerformanceCounter(&start);
+  }
+  QueryPerformanceCounter(&now);
+  return double(now - start) * resolution;
+}
+#else
 double posixGetElapsedTime( ){
   static struct timeval start;
   static int firstTime = 1;
@@ -147,6 +164,16 @@ double posixGetElapsedTime( ){
   double n = ((uint64_t) elapsed.tv_sec * (uint64_t) 1000000 + (uint64_t) elapsed.tv_usec) / 1000000.0;
   return n;
 }
+#endif
+
+double getElapsedTime( ){
+#ifdef WIN32
+  return winGetElapsedTime( );
+#else
+  return posixGetElapsedTime( );
+#endif  
+}
+
 
 void displayCallback( ){
   glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT );
@@ -154,9 +181,9 @@ void displayCallback( ){
   glLoadIdentity( );
   gluLookAt(0.0f, 0.0f, -2.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
-  glRotatef(float(posixGetElapsedTime( )) * 50.0f, 0.0f, 0.0f, 1.0f);
-  glRotatef(float(posixGetElapsedTime( )) * 30.0f, 0.0f, 1.0f, 0.0f);
-  glRotatef(float(posixGetElapsedTime( )) * 15.0f, 1.0f, 0.0f, 0.0f);
+  glRotatef(float(getElapsedTime( )) * 50.0f, 0.0f, 0.0f, 1.0f);
+  glRotatef(float(getElapsedTime( )) * 30.0f, 0.0f, 1.0f, 0.0f);
+  glRotatef(float(getElapsedTime( )) * 15.0f, 1.0f, 0.0f, 0.0f);
 
   drawTetrahedron( );
   
