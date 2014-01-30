@@ -7,10 +7,14 @@
 //
 // $Id: hello_glut.cpp 4782 2014-01-29 07:47:59Z mshafae $
 //
+// cl hello_glut.cpp /I %HOMEPATH%\local\include /link %HOMEPATH%\local\lib\freeglut.lib %HOMEPATH%\local\lib\glew32.lib
+//
 
 #include <cstdlib>
 #include <cstdio>
-#ifndef WIN32
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <sys/time.h>
 #endif
 
@@ -129,22 +133,23 @@ void drawTetrahedron(void){
   glEnd( );
 }
 
-#ifdef WIN32
-#include <windows.h>
+#ifdef _WIN32
 double winGetElapsedTime( ){
   LARGE_INTEGER frequency;
   LARGE_INTEGER now;
+  static LARGE_INTEGER start;
   static char firstTime = 1;
   static double resolution;
-  static double start;
+  //static double start;
   if( firstTime ){
     // initialize
-    QueryPerformanceFrequency(frequency);
-    resolution = 1.0 / double(frequency);
+    QueryPerformanceFrequency(&frequency);
+    resolution = 1.0 / double(frequency.QuadPart);
     QueryPerformanceCounter(&start);
+    firstTime = !firstTime;
   }
   QueryPerformanceCounter(&now);
-  return double(now - start) * resolution;
+  return double(now.QuadPart - start.QuadPart) * resolution;
 }
 #else
 double posixGetElapsedTime( ){
@@ -169,7 +174,7 @@ double posixGetElapsedTime( ){
 #endif
 
 double getElapsedTime( ){
-#ifdef WIN32
+#ifdef _WIN32
   return winGetElapsedTime( );
 #else
   return posixGetElapsedTime( );
