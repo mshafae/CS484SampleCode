@@ -19,6 +19,7 @@ To compile the program, run `make' on OS X or `gmake' on FreeBSD. The Makefile i
 It has been tested to build on
  . FreeBSD 9.2 64 bit with GCC 4.2.1
  . OS X 10.8.5 with Xcode 5.0.2 (like LLVM 3.3)
+ . MS Windows 7 with MSVS 2010 - no makefile is provided
 
 To configure the build, edit config/Makefile.*. Ensure that the variable OPENGL_KIT_HOME has the correct root path to where the header files and libraries can be found for the project's dependencies listed below.
 
