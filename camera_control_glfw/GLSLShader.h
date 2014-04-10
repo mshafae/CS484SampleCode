@@ -6,7 +6,7 @@
  * WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $Id: GLSLShader.h 4894 2014-04-07 05:08:37Z mshafae $
+ * $Id: GLSLShader.h 4915 2014-04-10 07:05:10Z mshafae $
  *
  * Utility functions for loading a shader.
  *
@@ -14,9 +14,17 @@
  *
  */
 
+#ifdef _WIN32
+#pragma warning(disable : 4996)
+#endif
+
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 
 #ifdef __APPLE__
 /* Apple's weird location of their OpenGL & GLUT implementation */
@@ -103,7 +111,7 @@ public:
       fprintf( stderr, "Info Log:\n%s\n", msg );
       free( msg );
     }
-    return( (bool)compiled_ok );
+    return( compiled_ok == 1 );
   }
   
   char* getInfoLog( ){
