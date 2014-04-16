@@ -146,7 +146,7 @@ static float tex[2][2][2] =
 
 /* *INDENT-ON* */
 
-void
+static void
 teapot(GLint grid, GLdouble scale, GLenum type)
 {
   float p[4][4][3], q[4][4][3], r[4][4][3], s[4][4][3];
@@ -209,7 +209,7 @@ teapot(GLint grid, GLdouble scale, GLenum type)
 void GLUTAPIENTRY 
 _glutSolidTeapot(GLdouble scale)
 {
-  teapot(10, scale, GL_FILL);
+  teapot(7, scale, GL_FILL);
 }
 
 void GLUTAPIENTRY 

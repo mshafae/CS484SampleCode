@@ -6,13 +6,14 @@
  * WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
  * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * $Id: GLSLShader.h 4925 2014-04-16 09:45:07Z mshafae $
+ * $Id: GLSLShader.h 4926 2014-04-16 20:30:28Z mshafae $
  *
  * Utility functions for loading a shader.
  *
  * STUDENTS DO NOT NEED TO MAKE ANY CHANGES TO THIS FILE.
  *
  */
+
 #ifdef _WIN32
 #pragma warning(disable : 4996)
 #endif
@@ -110,7 +111,7 @@ public:
       fprintf( stderr, "Info Log:\n%s\n", msg );
       free( msg );
     }
-    return( (bool)compiled_ok );
+    return( compiled_ok == 1 );
   }
   
   char* getInfoLog( ){

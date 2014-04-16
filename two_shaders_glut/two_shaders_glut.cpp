@@ -5,12 +5,11 @@
 // A really simple GLUT demo that renders an two teapots
 // with two different shader programs.
 //
-// $Id: two_shaders_glut.cpp 4925 2014-04-16 09:45:07Z mshafae $
+// $Id: two_shaders_glut.cpp 4926 2014-04-16 20:30:28Z mshafae $
 //
 
 #include <cstdlib>
 #include <cstdio>
-#include <sys/time.h>
 #include <cassert>
 
 #ifdef _WIN32
@@ -59,7 +58,7 @@ const float one[] = {1,1,1,1};
 // diffuse on teapot
 const float medium[] = {0.5,0.5,0.5,1};
 // ambient on teapot
-const float small[] = {0.2,0.2,0.2,1};
+const float littleBit[] = {0.2,0.2,0.2,1};
 // shininess of teapot
 const float high[] = {100};
 
@@ -144,7 +143,7 @@ void activateUniforms_A( ){
   glUniform4fv(uLight0_color, 1, light0_specular); 
   glUniform4fv(uLight1_position, 1, light1); 
   glUniform4fv(uLight1_color, 1, light1_specular); 
-  glUniform4fv(uAmbient, 1, small); 
+  glUniform4fv(uAmbient, 1, littleBit); 
   glUniform4fv(uDiffuse, 1, medium); 
   glUniform4fv(uSpecular, 1, one); 
   glUniform1fv(uShininess, 1, high); 
@@ -313,7 +312,7 @@ void displayCallback( ){
   transformVecByModelView(light2, light2_position); 
 
   shaderProgram_A->activate( );
-	activateUniforms_A( );
+  activateUniforms_A( );
     
   glPushMatrix( );
   glTranslatef(2.0, 0.0, 0.0);
@@ -321,7 +320,7 @@ void displayCallback( ){
   glPopMatrix( );
   
   shaderProgram_B->activate( );
-	activateUniforms_B( );
+  activateUniforms_B( );
     
   glPushMatrix( );
   glTranslatef(-2.0, 0.0, 0.0);
