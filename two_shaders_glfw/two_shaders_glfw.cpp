@@ -2,15 +2,14 @@
 // Michael Shafae
 // mshafae at fullerton.edu
 // 
-// A really simple GLUT demo that renders an two teapots
+// A really simple GLFW demo that renders an two teapots
 // with two different shader programs.
 //
-// $Id: two_shaders_glut.cpp 4929 2014-04-16 21:04:13Z mshafae $
+// $Id: two_shaders_glfw.cpp 4930 2014-04-16 21:04:19Z mshafae $
 //
 
 #include <cstdlib>
 #include <cstdio>
-#include <cassert>
 
 #ifdef _WIN32
 #include <Windows.h>
@@ -19,15 +18,8 @@
 
 #include <GL/glew.h>
 
-#ifdef __APPLE__
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#ifdef FREEGLUT
-#include <GL/freeglut_ext.h>
-#endif
+#define GLFW_INCLUDE_GLU
+#include <GLFW/glfw3.h>
 
 #include "GLSLShader.h"
 #include "transformations.h"
@@ -88,6 +80,10 @@ void msglVersion(void){
   fprintf(stderr, "\tOpenGL Version: %s\n", glGetString(GL_VERSION));
   fprintf(stderr, "\tGLSL Version: %s\n",
           glGetString(GL_SHADING_LANGUAGE_VERSION));
+}
+
+static void errorCallback(int error, const char* description){
+  fprintf(stderr, "GLFW Error: %s\n", description);
 }
 
 void printHelpMessage() {
@@ -214,64 +210,57 @@ void transformVecByModelView(float outVec[4], float inVec[4]){
   matMultVec4f( outVec, inVec, modelview );
 }
 
-void keyboardCallback( unsigned char key, int x, int y ){
-  switch( key ){
-    case 27: // The 'esc' key
-    case 'q':
-#ifdef FREEGLUT
-      glutLeaveMainLoop( );
-#else
-      exit( 0 );
-#endif
-      break;
-    case '+':
-      rotationDelta += 1.0;
-      printf( "Rotation delta set to %g\n", rotationDelta );
-      break;
-    case '-':
-      rotationDelta -= 1.0;
-      printf( "Rotation delta set to %g\n", rotationDelta );
-      break;
-    case 'h':
-      printHelpMessage( );
-      break;
-    case 'r':
-      initEyePosition( );
-      initUpVector( );
-      initRotationDelta( );
-      printf("Eye position, up vector and rotation delta reset.\n");
-      break;
-    default:
-      fprintf( stderr, "You pushed '%c' (%d).\n", key, key );
-      break;
-  }
-  glutPostRedisplay( );
-}
-
-void specialCallback( int key,int x,int y ){
+static void keyboardCallback(GLFWwindow* window, int key, int scancode,
+int action, int mods){
   float centerPosition[] = {0.0, 0.0, 0.0};
-  switch( key ){
-    case GLUT_KEY_LEFT:
-      rotateCameraLeft(rotationDelta, eyePosition,
+  if( action == GLFW_PRESS || action == GLFW_REPEAT ){
+    switch( key ){
+      case GLFW_KEY_ESCAPE:
+      case GLFW_KEY_Q:
+        glfwSetWindowShouldClose(window, GL_TRUE);
+        break;
+      case GLFW_KEY_EQUAL:
+        // In GLFW you have to catch the shift key's state XXX
+        rotationDelta += 1.0;
+        printf( "Rotation delta set to %g\n", rotationDelta );
+        break;
+      case GLFW_KEY_MINUS:
+        rotationDelta -= 1.0;
+        printf( "Rotation delta set to %g\n", rotationDelta );
+        break;
+      case GLFW_KEY_H:
+        printHelpMessage( );
+        break;
+      case GLFW_KEY_R:
+        initEyePosition( );
+        initUpVector( );
+        initRotationDelta( );
+        printf("Eye position, up vector and rotation delta reset.\n");
+      break;
+      case GLFW_KEY_LEFT:
+        rotateCameraLeft(-rotationDelta, eyePosition,
+                         centerPosition, upVector);
+        break;
+      case GLFW_KEY_RIGHT:
+        rotateCameraLeft(rotationDelta, eyePosition,
+                         centerPosition, upVector);
+        break;
+      case GLFW_KEY_UP:
+        rotateCameraUp(-rotationDelta, eyePosition,
                        centerPosition, upVector);
-      break;
-    case GLUT_KEY_RIGHT:
-      rotateCameraLeft(-rotationDelta, eyePosition,
+        break;
+      case GLFW_KEY_DOWN:
+        rotateCameraUp(rotationDelta, eyePosition,
                        centerPosition, upVector);
-      break;
-    case GLUT_KEY_UP:
-      rotateCameraUp(rotationDelta, eyePosition,
-                     centerPosition, upVector);
-      break;
-    case GLUT_KEY_DOWN:
-      rotateCameraUp(-rotationDelta, eyePosition,
-                     centerPosition, upVector);
-      break;
+        break;
+      default:
+        fprintf( stderr, "You pushed '%c' (%d).\n", key, key );
+        break;
+    }
   }
-  glutPostRedisplay( );
 }
 
-void reshapeCallback( int width, int height ){
+void reshapeCallback( GLFWwindow* window, int width, int height ){
   if (height == 0){
     height = 1;
   }
@@ -282,7 +271,7 @@ void reshapeCallback( int width, int height ){
   gluPerspective(90.0, ratio, 1.0, 25.0); 
 }
 
-void displayCallback( ){
+void display( ){
   const float centerPosition[] = {0.0, 0.0, 0.0};
 
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -316,50 +305,66 @@ void displayCallback( ){
     
   glPushMatrix( );
   glTranslatef(-2.0, 0.0, 0.0);
-  _glutSolidTeapot(1.3);
+  _glutSolidTeapot(1.3);  
   glPopMatrix( );
-  
-  glutSwapBuffers();
-}
-
-void updateCallback( int x ){
-  glutPostRedisplay( );
-  glutTimerFunc( 16, updateCallback, 0 );
 }
 
 int main( int argc, char* argv[] ){
-  // Init. GLUT
-  glutInit( &argc, argv );
-  glutInitDisplayMode( GLUT_RGBA | GLUT_DOUBLE | GLUT_DEPTH );
-  glutInitWindowSize( 500, 500);
-  glutCreateWindow( "Two Shaders" );
+  GLFWwindow* window;
+  int width, height;
+  glfwSetErrorCallback(errorCallback);
+  if( !glfwInit( ) ){
+    exit(1);
+  }
+
+  glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+  //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+  //glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
+  glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+  window = glfwCreateWindow(500, 500, "Two Shaders", 0, NULL);
+  if( !window ){
+    glfwTerminate( );
+    exit(1);
+  }
+  glfwMakeContextCurrent(window);
   
-  // Init. GLEW
   glewExperimental = true;
-  if( glewInit( ) != GLEW_OK ){
-    fprintf(stderr, "GLEW init failed.\n");
+  GLenum err = glewInit( );
+  if( err != GLEW_OK ){
+    fprintf(stderr, "GLEW: init failed: %s\n", glewGetErrorString(err));
     exit(1);
   }
   
+  // Register callbacks with GLFW
+  glfwSetKeyCallback(window, keyboardCallback);
+  glfwSetFramebufferSizeCallback(window, reshapeCallback);
+  
   // Set OpenGL State
+  glfwSwapInterval( 1 );
+  glfwGetFramebufferSize(window, &width, &height);
+  reshapeCallback(window, width, height);
   glClearColor( 0.0f, 0.0f, 0.0f, 1.0f );
   glEnable( GL_DEPTH_TEST );
   glDepthFunc( GL_LESS );
 
   // Application specific initialization
   init( );
-
-  // Register callbacks with GLUT
-  glutKeyboardFunc( keyboardCallback );
-  glutSpecialFunc( specialCallback );
-  glutDisplayFunc( displayCallback );
-  glutReshapeFunc( reshapeCallback );
-  glutTimerFunc( 16, updateCallback, 0 );
+	msglError( );
   
   msglVersion( );
   
   puts("Press 'h' to see a help message at any time.");
   
-  glutMainLoop( );
+  while( !glfwWindowShouldClose(window) ){
+
+    display( );
+    
+    glfwSwapBuffers(window);
+    glfwPollEvents( );
+  }
+  
+  glfwDestroyWindow(window);
+  glfwTerminate( );
   return(0);
 }

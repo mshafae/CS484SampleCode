@@ -1,10 +1,10 @@
 #
-# GNU Makefile for the two_shaders_glut project
+# GNU Makefile for the two_shaders_glfw project
 #
 # Michael Shafae
 # mshafae at fullerton.edu
 #
-# $Id: Makefile 4929 2014-04-16 21:04:13Z mshafae $
+# $Id: Makefile 4930 2014-04-16 21:04:19Z mshafae $
 #
 # It depends on the config.guess program that is in the config directory
 # to guess what configuration to use for the build.
@@ -23,7 +23,7 @@ endif
 
 TARGET = twoshaders
 # C++ Files
-CXXFILES =   two_shaders_glut.cpp transformations.cpp glut_teapot.cpp
+CXXFILES =   two_shaders_glfw.cpp transformations.cpp glut_teapot.cpp
 CFILES =  
 # Headers
 HEADERS =  GLSLShader.h glut_teapot.h
