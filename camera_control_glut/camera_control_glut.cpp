@@ -5,12 +5,17 @@
 // A really simple GLUT demo that renders an animated and
 // colored tetrahedron which the edges outlined in black.
 //
-// $Id: camera_control_glut.cpp 4895 2014-04-07 05:09:25Z mshafae $
+// $Id: camera_control_glut.cpp 4915 2014-04-10 07:05:10Z mshafae $
 //
 
 #include <cstdlib>
 #include <cstdio>
-#include <sys/time.h>
+//#include <sys/time.h>
+
+#ifdef _WIN32
+#include <Windows.h>
+#pragma warning(disable : 4305)
+#endif
 
 #include <GL/glew.h>
 
@@ -51,7 +56,7 @@ const float one[] = {1,1,1,1};
 // diffuse on teapot
 const float medium[] = {0.5,0.5,0.5,1};
 // ambient on teapot
-const float small[] = {0.2,0.2,0.2,1};
+const float littleBit[] = {0.2,0.2,0.2,1};
 // shininess of teapot
 const float high[] = {100};
 
@@ -270,7 +275,7 @@ void displayCallback( ){
       centerPosition[0], centerPosition[1], centerPosition[2],
       upVector[0], upVector[1], upVector[2]
     );
-    glLoadMatrixf(myModelView); 
+    glMultMatrixf(myModelView); 
   }
 
   // Set light & material properties for the teapot;
@@ -284,7 +289,7 @@ void displayCallback( ){
   glUniform4fv(uLight1_position, 1, light1); 
   glUniform4fv(uLight1_color, 1, light1_specular); 
 
-  glUniform4fv(uAmbient, 1, small); 
+  glUniform4fv(uAmbient, 1, littleBit); 
   glUniform4fv(uDiffuse, 1, medium); 
   glUniform4fv(uSpecular, 1, one); 
   glUniform1fv(uShininess, 1, high); 

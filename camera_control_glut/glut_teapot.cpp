@@ -1,5 +1,8 @@
 
 // STUDENTS DO NOT NEED TO MAKE ANY CHANGES TO THIS FILE.
+#ifdef _WIN32
+#pragma warning(disable : 4305 4244)
+#endif
 
 
 /* Copyright (c) Mark J. Kilgard, 1994. */

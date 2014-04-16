@@ -4,10 +4,14 @@
 // 
 // Simple header file for glut_teapot.cpp module.
 //
-// $Id: glut_teapot.h 4892 2014-04-05 08:37:14Z mshafae $
+// $Id: glut_teapot.h 4915 2014-04-10 07:05:10Z mshafae $
 //
 // STUDENTS DO NOT NEED TO MAKE ANY CHANGES TO THIS FILE.
 //
+
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 
 #ifdef __APPLE__
 /* Apple's weird location of their OpenGL & GLUT implementation */

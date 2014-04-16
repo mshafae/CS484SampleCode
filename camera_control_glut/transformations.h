@@ -5,7 +5,7 @@
 // Procedural module that implements transformations used in
 // the homework assignment.
 //
-// $Id: transformations.h 4897 2014-04-07 05:13:41Z mshafae $
+// $Id: transformations.h 4915 2014-04-10 07:05:10Z mshafae $
 //
 // STUDENTS _MUST_ ADD THEIR CODE INTO THIS FILE
 //
@@ -15,6 +15,10 @@
 
 // This is for testing, just ignore it.
 //#define __SOLUTION__
+
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 
 #ifdef __APPLE__
 /* Apple's weird location of their OpenGL & GLUT implementation */
