@@ -5,7 +5,7 @@
 // A really simple GLUT demo that renders an two teapots
 // with two different shader programs.
 //
-// $Id: two_shaders_glut.cpp 4961 2014-04-23 22:02:18Z mshafae $
+// $Id: two_shaders_glut.cpp 4964 2014-04-25 04:43:20Z mshafae $
 //
 
 #include <cstdlib>
@@ -264,12 +264,13 @@ void updateProjection(int width, int height){
   float projectionTransform[16];
   glViewport( 0, 0, (GLsizei)width, (GLsizei)height );
   double ratio = double(width) / double(height);
+  glMatrixMode( GL_PROJECTION );
   if( isPerspective && useGLPerspective){
     // perspective and use OpenGL
     glPushMatrix( );
     glLoadIdentity( );
     gluPerspective(90.0, ratio, 1.0, 25.0);
-    glGetFloatv(GL_MODELVIEW, projectionTransform);
+    glGetFloatv(GL_PROJECTION_MATRIX, projectionTransform);
     glPopMatrix( );
   }else if( isPerspective && !useGLPerspective ){
     // perspective and do not use OpenGL
@@ -279,15 +280,13 @@ void updateProjection(int width, int height){
     glPushMatrix( );
     glLoadIdentity( );
     glOrtho(-7.0, 7.0, -7.0, 7.0, 1.0, 25.0);
-    glGetFloatv(GL_MODELVIEW, projectionTransform);
+    glGetFloatv(GL_PROJECTION_MATRIX, projectionTransform);
     glPopMatrix( );
   }else if( !isPerspective && !useGLPerspective ){
     // orthographic and do not use OpenGL
     myOrtho(projectionTransform, -7.0, 7.0, -7.0, 7.0, 1.0, 25.0);
   }
-  glMatrixMode( GL_PROJECTION );
-  glLoadIdentity( );
-  glMultMatrixf(projectionTransform);
+  glLoadMatrixf(projectionTransform);
 }
 
 void reshapeCallback( int width, int height ){

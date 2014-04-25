@@ -5,7 +5,7 @@
 // Procedural module that implements transformations used in
 // the homework assignment.
 //
-// $Id: transformations.cpp 4959 2014-04-23 08:30:49Z mshafae $
+// $Id: transformations.cpp 4964 2014-04-25 04:43:20Z mshafae $
 //
 // STUDENTS _MUST_ ADD THEIR CODE INTO THIS FILE
 //
@@ -67,7 +67,9 @@ void myTranslatef( GLfloat *matrix, GLfloat x, GLfloat y, GLfloat z ){
   glPushMatrix( );
   glLoadIdentity( );
   glTranslatef(x, y, z);
-  glGetFloatv(mode, matrix);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
   glPopMatrix( ); 
 }
 
@@ -82,7 +84,9 @@ void myScalef( GLfloat *matrix, GLfloat x, GLfloat y, GLfloat z ){
   glPushMatrix( );
   glLoadIdentity( );
   glScalef(x, y, z);
-  glGetFloatv(mode, matrix);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
   glPopMatrix( );
 }
 
@@ -98,7 +102,9 @@ void myRotatef( GLfloat *matrix,
   glPushMatrix( );
   glLoadIdentity( );
   glRotatef(angle, x, y, z);
-  glGetFloatv(mode, matrix);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
   glPopMatrix( );
 }
 
@@ -120,7 +126,9 @@ void myLookAt( GLfloat *matrix,
     centerX, centerY, centerZ,
     upX, upY, upZ
   );
-  glGetFloatv(mode, matrix);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
   glPopMatrix( );
 }
 
@@ -137,7 +145,9 @@ void myFrustum( GLfloat *matrix,
   glPushMatrix( );
   glLoadIdentity( );
   glFrustum(left, right, bottom, top, zNear, zFar);
-  glGetFloatv(mode, matrix);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
   glPopMatrix( );
 }
 
@@ -155,7 +165,9 @@ void myPerspective( GLfloat *matrix,
   glPushMatrix( );
   glLoadIdentity( );
   gluPerspective(fovy, aspect, zNear, zFar);
-  glGetFloatv(mode, matrix);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
   glPopMatrix( );
   glMatrixMode( mode );
 }
@@ -173,6 +185,8 @@ void myOrtho( GLfloat *matrix,
   glPushMatrix( );
   glLoadIdentity( );
   glOrtho(left, right, bottom, top, zNear, zFar);
-  glGetFloatv(mode, matrix);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
   glPopMatrix( );
 }
