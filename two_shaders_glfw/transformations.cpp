@@ -5,7 +5,7 @@
 // Procedural module that implements transformations used in
 // the homework assignment.
 //
-// $Id: transformations.cpp 4923 2014-04-16 08:50:03Z mshafae $
+// $Id: transformations.cpp 4968 2014-04-29 06:44:56Z mshafae $
 //
 // STUDENTS _MUST_ ADD THEIR CODE INTO THIS FILE
 //
@@ -51,18 +51,61 @@ void rotateCameraLeft(float degrees, float *eyePosition, float *centerPosition, 
 void rotateCameraUp(float degrees, float *eyePosition, float *centerPosition, float *upVector){
   // Please implement this function.
 }
+#else
+#include "transformations_solution.cpp"
+#endif
+
 
 void myTranslatef( GLfloat *matrix, GLfloat x, GLfloat y, GLfloat z ){
   // Please implement this function.
+  
+  // This code is just a placeholder to demonstrate how this procedure
+  // returns the LookAt matrix by reference.
+  // YOU MUST REMOVE THE CODE BELOW AND WRITE YOUR OWN ROUTINE.
+  int mode;
+  glGetIntegerv(GL_MATRIX_MODE, &mode);
+  glPushMatrix( );
+  glLoadIdentity( );
+  glTranslatef(x, y, z);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
+  glPopMatrix( ); 
 }
 
 void myScalef( GLfloat *matrix, GLfloat x, GLfloat y, GLfloat z ){
-  // Not needed in this exercise.
+  // Please implement this function.
+
+  // This code is just a placeholder to demonstrate how this procedure
+  // returns the LookAt matrix by reference.
+  // YOU MUST REMOVE THE CODE BELOW AND WRITE YOUR OWN ROUTINE.
+  int mode;
+  glGetIntegerv(GL_MATRIX_MODE, &mode);
+  glPushMatrix( );
+  glLoadIdentity( );
+  glScalef(x, y, z);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
+  glPopMatrix( );
 }
 
 void myRotatef( GLfloat *matrix,
                 GLfloat angle, GLfloat x, GLfloat y, GLfloat z ){
   // Remember the Rodrigues' rotation formula?
+
+  // This code is just a placeholder to demonstrate how this procedure
+  // returns the LookAt matrix by reference.
+  // YOU MUST REMOVE THE CODE BELOW AND WRITE YOUR OWN ROUTINE.
+  int mode;
+  glGetIntegerv(GL_MATRIX_MODE, &mode);
+  glPushMatrix( );
+  glLoadIdentity( );
+  glRotatef(angle, x, y, z);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
+  glPopMatrix( );
 }
 
 void myLookAt( GLfloat *matrix,
@@ -77,33 +120,73 @@ void myLookAt( GLfloat *matrix,
   int mode;
   glGetIntegerv(GL_MATRIX_MODE, &mode);
   glPushMatrix( );
+  glLoadIdentity( );
   gluLookAt(
     eyeX, eyeY, eyeZ,
     centerX, centerY, centerZ,
     upX, upY, upZ
   );
-  glGetFloatv(mode, matrix);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
   glPopMatrix( );
 }
 
 void myFrustum( GLfloat *matrix,
                 GLdouble left, GLdouble right, GLdouble bottom,
                 GLdouble top, GLdouble zNear, GLdouble zFar ){
-  // Not needed in this exercise.
+  // Please implement this function.
+
+  // This code is just a placeholder to demonstrate how this procedure
+  // returns the LookAt matrix by reference.
+  // YOU MUST REMOVE THE CODE BELOW AND WRITE YOUR OWN ROUTINE.
+  int mode;
+  glGetIntegerv(GL_MATRIX_MODE, &mode);
+  glPushMatrix( );
+  glLoadIdentity( );
+  glFrustum(left, right, bottom, top, zNear, zFar);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
+  glPopMatrix( );
 }
 
 void myPerspective( GLfloat *matrix,
                     GLdouble fovy, GLdouble aspect,
                     GLdouble zNear, GLdouble zFar ){
-  // Not needed in this exercise.
+  // Please implement this function.
+
+  // This code is just a placeholder to demonstrate how this procedure
+  // returns the LookAt matrix by reference.
+  // YOU MUST REMOVE THE CODE BELOW AND WRITE YOUR OWN ROUTINE.
+  int mode;
+  glGetIntegerv(GL_MATRIX_MODE, &mode);
+  glMatrixMode( GL_MODELVIEW );
+  glPushMatrix( );
+  glLoadIdentity( );
+  gluPerspective(fovy, aspect, zNear, zFar);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
+  glPopMatrix( );
+  glMatrixMode( mode );
 }
 
 void myOrtho( GLfloat *matrix,
               GLdouble left, GLdouble right, GLdouble bottom,
               GLdouble top, GLdouble zNear, GLdouble zFar ){
-  // Not needed in this exercise.
-}
+  // Please implement this function.
 
-#else
-#include "transformations_solution.cpp"
-#endif
+  // This code is just a placeholder to demonstrate how this procedure
+  // returns the LookAt matrix by reference.
+  // YOU MUST REMOVE THE CODE BELOW AND WRITE YOUR OWN ROUTINE.
+  int mode;
+  glGetIntegerv(GL_MATRIX_MODE, &mode);
+  glPushMatrix( );
+  glLoadIdentity( );
+  glOrtho(left, right, bottom, top, zNear, zFar);
+  glGetFloatv(mode == GL_MODELVIEW ?
+              GL_MODELVIEW_MATRIX : GL_PROJECTION_MATRIX,
+              matrix);
+  glPopMatrix( );
+}
