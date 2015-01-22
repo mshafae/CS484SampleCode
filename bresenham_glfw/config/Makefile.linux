@@ -1,5 +1,5 @@
 #
-# Configuration for FreeBSD
+# Configuration for Linux
 #
 # $Id: Makefile.freebsd 4759 2014-01-23 07:42:48Z mshafae $
 #
@@ -11,10 +11,10 @@
 # <http://delaunay.ecs.fullerton.edu/~mshafae/srl/SRL_FreeBSD_9_2_64_bit_20140117_ova.zip>
 # was used which included all the dependencies under /usr/local.
 #
-CC=cl
-CXX=cl
-OPENGL_KIT_HOME = ${HOME}/winhomedir/local
-CFLAGS += -g -DNDEBUG -Wall -pedantic -pipe -I ${OPENGL_KIT_HOME}/include
-LDFLAGS += -g -Wall -pipe -L ${OPENGL_KIT_HOME}/lib
-LLDLIBS += -lglut -lX11 -lGLU -lXrandr -lGLEW
+CC=clang
+CXX=clang++
+#OPENGL_KIT_HOME = ${HOME}/winhomedir/local
+CFLAGS += -g -DNDEBUG -Wall -pedantic -pipe -I/opt/local/include -L/opt/local/lib
+LDFLAGS += -g -Wall -pipe 
+LLDLIBS += -lGL -lglut -lX11 -lGLU -lglfw3
 
