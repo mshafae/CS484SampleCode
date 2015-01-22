@@ -16,5 +16,5 @@ CXX=clang++
 #OPENGL_KIT_HOME = ${HOME}/winhomedir/local
 CFLAGS += -g -DNDEBUG -Wall -pedantic -pipe -I/opt/local/include -L/opt/local/lib
 LDFLAGS += -g -Wall -pipe 
-LLDLIBS += -lGL -lglut -lX11 -lGLU -lglfw3
+LLDLIBS += -lglfw3 -lGL -lGLU -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lGLEW
 
