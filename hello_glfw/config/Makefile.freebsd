@@ -14,5 +14,5 @@
 OPENGL_KIT_HOME = /usr/local
 CFLAGS += -g -DNDEBUG -Wall -pedantic -pipe -I ${OPENGL_KIT_HOME}/include
 LDFLAGS += -g -Wall -pipe -L ${OPENGL_KIT_HOME}/lib
-LLDLIBS += -lglut -lX11 -lGLU -lXrandr -lGLEW
+LLDLIBS += -lglfw3 -lX11 -lGLU -lXrandr -lGLEW
 
