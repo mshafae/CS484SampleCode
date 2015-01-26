@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *
- * $Id: GFXMath_Test.cpp 5479 2015-01-25 01:23:30Z mshafae $
+ * $Id: GFXMath_Test.cpp 5487 2015-01-26 09:14:49Z mshafae $
  *
  */
 
@@ -206,17 +206,17 @@ TEST_F(Vec1Test, Constructors) {
   EXPECT_TRUE(fpEqual(0.5374693001147223f, b[0], precision));
   
   EXPECT_EQ(1u, f->size());
-  EXPECT_TRUE(fpEqual(0.2493981133863178f, *f[0], precision));
+  EXPECT_TRUE(fpEqual(0.2493981133863178f, (*f)[0], precision));
   
   EXPECT_EQ(1u, g->size());
-  EXPECT_TRUE(fpEqual(0.4954117880655719f, *g[0], precision));
+  EXPECT_TRUE(fpEqual(0.4954117880655719f, (*g)[0], precision));
   
   delete g;
   
   g = new Vec1(f);
   
   EXPECT_EQ(1u, g->size());
-  EXPECT_TRUE(fpEqual(0.2493981133863178f, *g[0], precision));
+  EXPECT_TRUE(fpEqual(0.2493981133863178f, (*g)[0], precision));
 }
 
 TEST_F(Vec1Test, BooleanEquals) {
@@ -230,7 +230,6 @@ TEST_F(Vec1Test, BooleanEquals) {
   EXPECT_TRUE(*f == *f);
   *f = *g;
   EXPECT_TRUE(*f == *g);
-  
 }
 
 TEST_F(Vec1Test, BooleanNotEquals) {
@@ -301,7 +300,6 @@ TEST_F(Vec1Test, ArithmeticNegation) {
   EXPECT_TRUE(a == x);
 }
 
-
 TEST_F(Vec1Test, BracketOperator) {
   float precision = FP_SP_EPSILON;
   float x = 0.5374693001147223;
@@ -349,9 +347,625 @@ TEST_F(Vec1Test, Distance) {
   EXPECT_TRUE(fpEqual(x, _x, precision));
 }
 
-TEST_F(Vec1Test, Angle) {
+
+class Vec2Test : public testing::Test{
+protected:
+  virtual void SetUp( ){
+    a = Vec2(0.311614220902166, 0.747756774429607);
+    b = Vec2(0.864512059694352, 0.884741010953878);
+    c = Vec2(0.366423681042827, 0.673356035859162);
+    d = Vec2(0.721620478534571, 0.578209983216220);
+    e = new Vec2(0.178987706239355, 0.570434306026590);
+    f = new Vec2(0.759776941934895, 0.415749743654568);
+    g = new Vec2(0.899931550870371, 0.100554788367090);
+    h = new Vec2(0.385096025090437, 0.392850021448233);
+  }
+  virtual void TearDown( ){
+    delete e;
+    delete f;
+    delete g;
+    delete h;
+  }
+  Vec2 a, b, c, d;
+  Vec2 *e, *f, *g, *h;
+};
+
+TEST_F(Vec2Test, Constructors) {
   float precision = FP_SP_EPSILON;
-  float _x = 0.0f;
-  float x = angle(a, b);
+  EXPECT_EQ(2u, a.size());
+  EXPECT_TRUE(fpEqual(0.311614220902166f, a[0], precision));
+  EXPECT_TRUE(fpEqual(0.747756774429607f, a[1], precision));
+
+  EXPECT_EQ(2u, b.size());
+  EXPECT_TRUE(fpEqual(0.864512059694352f, b[0], precision));
+  EXPECT_TRUE(fpEqual(0.884741010953878f, b[1], precision));
+
+  b = Vec2(a);
+  
+  EXPECT_EQ(2u, b.size());
+  EXPECT_TRUE(fpEqual(0.311614220902166f, b[0], precision));
+  EXPECT_TRUE(fpEqual(0.747756774429607f, b[1], precision));
+  
+  EXPECT_EQ(2u, f->size());
+  EXPECT_TRUE(fpEqual(0.759776941934895f, (*f)[0], precision));
+  EXPECT_TRUE(fpEqual(0.415749743654568f, (*f)[1], precision));
+  
+  EXPECT_EQ(2u, g->size());
+  EXPECT_TRUE(fpEqual(0.899931550870371f, (*g)[0], precision));
+  EXPECT_TRUE(fpEqual(0.100554788367090f, (*g)[1], precision));
+  
+  delete g;
+  
+  g = new Vec2(f);
+  
+  EXPECT_EQ(2u, g->size());
+  EXPECT_TRUE(fpEqual(0.759776941934895f, (*g)[0], precision));
+  EXPECT_TRUE(fpEqual(0.415749743654568f, (*g)[1], precision));
+}
+
+TEST_F(Vec2Test, BooleanEquals) {
+  EXPECT_FALSE(a == b);
+  EXPECT_FALSE(b == c);
+  b = a;
+  EXPECT_TRUE(a == b);
+  EXPECT_TRUE(a == a);
+  
+  EXPECT_FALSE(*f == *g);
+  EXPECT_TRUE(*f == *f);
+  *f = *g;
+  EXPECT_TRUE(*f == *g);
+}
+
+TEST_F(Vec2Test, BooleanNotEquals) {
+  EXPECT_TRUE(a != b);
+  EXPECT_TRUE(b != c);
+  b = a;
+  EXPECT_FALSE(a != b);
+  EXPECT_FALSE(a != a);
+  
+  EXPECT_TRUE(*f != *g);
+  EXPECT_FALSE(*f != *f);
+  *f = *g;
+  EXPECT_FALSE(*f != *g);
+}
+
+TEST_F(Vec2Test, ArithmeticAddition) {
+  Vec2 _x = Vec2(1.176126280596518, 1.632497785383486);
+  Vec2 x = a + b;
+  EXPECT_TRUE(x == _x);
+  
+  Vec2 _y = Vec2(0.623228441804331, 1.495513548859215);
+  a += a;
+  EXPECT_TRUE(a == _y);
+}
+
+TEST_F(Vec2Test, ArithmeticSubtraction) {
+  Vec2 _x = Vec2(-0.552897838792186, -0.136984236524271);
+  Vec2 x = a - b;
+  EXPECT_TRUE(x == _x);
+  
+  Vec2 _y = Vec2(0.0, 0.0);
+  a -= a;
+  EXPECT_TRUE(a == _y);
+  
+  Vec2 _z = Vec2(0.498088378651525, 0.211384975094717);
+  b -= c;
+  EXPECT_TRUE(b == _z);
+  
+}
+
+TEST_F(Vec2Test, ArithmeticMultiplication) {
+  Vec2 _x = Vec2(0.349942770073132, 0.839730857684449);
+  Vec2 x = a * 1.123;
+  EXPECT_TRUE(x == _x);
+  Vec2 y = 1.123f * a;
+  EXPECT_TRUE(y == _x);
+  a *= 1.123;
+  EXPECT_TRUE(a == _x);
+}
+
+TEST_F(Vec2Test, ArithmeticDivision) {
+  Vec2 _x = Vec2(0.146780132313785, 0.352217039297978);
+  Vec2 _y = Vec2(6.812911149733879, 2.839158497252579);
+  Vec2 x = a / 2.123f;
+  EXPECT_TRUE(x == _x);
+  Vec2 y = 2.123f / a;
+  EXPECT_TRUE(y == _y);
+  a /= 2.123;
+  EXPECT_TRUE(_x == a);
+}
+
+TEST_F(Vec2Test, ArithmeticNegation) {
+  Vec2 _x = Vec2(-0.311614220902166, -0.747756774429607);
+  EXPECT_TRUE(_x == -a);
+  Vec2 x = -a;
+  EXPECT_TRUE(_x == x);
+  x = -x;
+  EXPECT_TRUE(a == x);
+}
+
+TEST_F(Vec2Test, BracketOperator) {
+  float precision = FP_SP_EPSILON;
+  float a1 = 0.311614220902166;
+  float a2 = 0.747756774429607;
+  float y = 1.123;
+  EXPECT_TRUE(fpEqual(a[0], a1, precision));
+  EXPECT_TRUE(fpEqual(a[1], a2, precision));
+  a[0] = y;
+  a[1] = y;
+  EXPECT_TRUE(fpEqual(a[0], y, precision));
+  EXPECT_TRUE(fpEqual(a[1], y, precision));
+}
+
+TEST_F(Vec2Test, DotProduct) {
+  float precision = FP_SP_EPSILON;
+  float _x = 0.930965336498644;
+  float _y = 0.656243616373835;
+  float x = dot(a, b);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+  float y = dot(a, a);
+  EXPECT_TRUE(fpEqual(y, _y, precision));  
+}
+
+TEST_F(Vec2Test, SquaredLength) {
+  float precision = FP_SP_EPSILON;
+  float _x = 0.656243616373835;
+  float x = squaredLength(a);
   EXPECT_TRUE(fpEqual(x, _x, precision));
 }
+
+TEST_F(Vec2Test, Length) {
+  float precision = FP_SP_EPSILON;
+  float _x = 0.810088647231792;
+  float x = length(a);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+
+TEST_F(Vec2Test, Normalize) {
+  Vec2 _x = Vec2(0.384666816362633, 0.923055491500612);
+  Vec2 x = normalize(a);
+  EXPECT_TRUE(x == _x);
+}
+
+TEST_F(Vec2Test, Distance) {
+  float precision = FP_SP_EPSILON;
+  float _x = 0.569614519826529;
+  Vec2 v = b - a;
+  float x = length(v);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+
+TEST_F(Vec2Test, Angle) {
+  float precision = FP_SP_EPSILON;
+  float _x = 0.378987504225326;
+  float x = angleInRadians(a, b);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+
+
+class Vec3Test : public testing::Test{
+protected:
+  virtual void SetUp( ){
+    a = Vec3(0.577030653156837, 0.464016202534924, 0.679106087611341);
+    b = Vec3(0.738149043232649, 0.926337063215633, 0.714927181933456);
+    c = Vec3(0.491486045834997, 0.018638374076204, 0.410554052105320);
+    d = Vec3(0.063211644914916, 0.979947129362498, 0.656295868900335);
+    e = new Vec3(0.482925842360389, 0.998345440877571, 0.300338709028279);
+    f = new Vec3(0.709536553526954, 0.177644222044825, 0.651760642123328);
+    g = new Vec3(0.136851337218809, 0.421710455193275, 0.640287931935240);
+    h = new Vec3(0.811179570994577, 0.373749323570861, 0.194826096099051);
+  }
+  virtual void TearDown( ){
+    delete e;
+    delete f;
+    delete g;
+    delete h;
+  }
+  Vec3 a, b, c, d;
+  Vec3 *e, *f, *g, *h;
+};
+
+TEST_F(Vec3Test, Constructors) {
+  float precision = FP_SP_EPSILON;
+  EXPECT_EQ(3u, a.size());
+  EXPECT_TRUE(fpEqual(0.577030653156837f, a[0], precision));
+  EXPECT_TRUE(fpEqual(0.464016202534924f, a[1], precision));
+  EXPECT_TRUE(fpEqual(0.679106087611341f, a[2], precision));
+
+  EXPECT_EQ(3u, b.size());
+  EXPECT_TRUE(fpEqual(0.738149043232649f, b[0], precision));
+  EXPECT_TRUE(fpEqual(0.926337063215633f, b[1], precision));
+  EXPECT_TRUE(fpEqual(0.714927181933456f, b[2], precision));
+
+  b = Vec3(a);
+  
+  EXPECT_EQ(3u, b.size());
+  EXPECT_TRUE(fpEqual(0.577030653156837f, b[0], precision));
+  EXPECT_TRUE(fpEqual(0.464016202534924f, b[1], precision));
+  EXPECT_TRUE(fpEqual(0.679106087611341f, b[2], precision));
+  
+  EXPECT_EQ(3u, f->size());
+  EXPECT_TRUE(fpEqual(0.709536553526954f, (*f)[0], precision));
+  EXPECT_TRUE(fpEqual(0.177644222044825f, (*f)[1], precision));
+  EXPECT_TRUE(fpEqual(0.651760642123328f, (*f)[2], precision));
+  
+  EXPECT_EQ(3u, g->size());
+  EXPECT_TRUE(fpEqual(0.136851337218809f, (*g)[0], precision));
+  EXPECT_TRUE(fpEqual(0.421710455193275f, (*g)[1], precision));
+  EXPECT_TRUE(fpEqual(0.640287931935240f, (*g)[2], precision));
+  
+  delete g;
+  
+  g = new Vec3(f);
+  
+  EXPECT_EQ(3u, g->size());
+  EXPECT_TRUE(fpEqual(0.709536553526954f, (*g)[0], precision));
+  EXPECT_TRUE(fpEqual(0.177644222044825f, (*g)[1], precision));
+  EXPECT_TRUE(fpEqual(0.651760642123328f, (*g)[2], precision));
+}
+
+TEST_F(Vec3Test, BooleanEquals) {
+  EXPECT_FALSE(a == b);
+  EXPECT_FALSE(b == c);
+  b = a;
+  EXPECT_TRUE(a == b);
+  EXPECT_TRUE(a == a);
+  
+  EXPECT_FALSE(*f == *g);
+  EXPECT_TRUE(*f == *f);
+  *f = *g;
+  EXPECT_TRUE(*f == *g);
+}
+
+TEST_F(Vec3Test, BooleanNotEquals) {
+  EXPECT_TRUE(a != b);
+  EXPECT_TRUE(b != c);
+  b = a;
+  EXPECT_FALSE(a != b);
+  EXPECT_FALSE(a != a);
+  
+  EXPECT_TRUE(*f != *g);
+  EXPECT_FALSE(*f != *f);
+  *f = *g;
+  EXPECT_FALSE(*f != *g);
+}
+
+TEST_F(Vec3Test, ArithmeticAddition) {
+  Vec3 _x = Vec3(1.315179696389486, 1.390353265750557, 1.394033269544797);
+  Vec3 x = a + b;
+  EXPECT_TRUE(x == _x);
+  
+  Vec3 _y = Vec3(1.154061306313675, 0.928032405069848, 1.358212175222682);
+  a += a;
+  EXPECT_TRUE(a == _y);
+}
+
+TEST_F(Vec3Test, ArithmeticSubtraction) {
+  Vec3 _x = Vec3(-0.161118390075811, -0.462320860680710, -0.035821094322115);
+  Vec3 x = a - b;
+  EXPECT_TRUE(x == _x);
+  
+  Vec3 _y = Vec3(0.0, 0.0, 0.0);
+  a -= a;
+  EXPECT_TRUE(a == _y);
+  
+  Vec3 _z = Vec3(0.246662997397651, 0.907698689139429, 0.304373129828136);
+  b -= c;
+  EXPECT_TRUE(b == _z);
+  
+}
+
+TEST_F(Vec3Test, ArithmeticMultiplication) {
+  Vec3 _x = Vec3(0.648005423495128, 0.521090195446719, 0.762636136387536);
+  Vec3 x = a * 1.123;
+  EXPECT_TRUE(x == _x);
+  Vec3 y = 1.123f * a;
+  EXPECT_TRUE(y == _x);
+  a *= 1.123;
+  EXPECT_TRUE(a == _x);
+}
+
+TEST_F(Vec3Test, ArithmeticDivision) {
+  Vec3 _x = Vec3(0.271799648213301, 0.218566275334396, 0.319880399251691);
+  Vec3 _y = Vec3(3.679180626515117, 4.575271269412655, 3.126168412754700);
+  Vec3 x = a / 2.123f;
+  EXPECT_TRUE(x == _x);
+  Vec3 y = 2.123f / a;
+  EXPECT_TRUE(y == _y);
+  a /= 2.123;
+  EXPECT_TRUE(_x == a);
+}
+
+TEST_F(Vec3Test, ArithmeticNegation) {
+  Vec3 _x = Vec3(-0.577030653156837, -0.464016202534924, -0.679106087611341);
+  EXPECT_TRUE(_x == -a);
+  Vec3 x = -a;
+  EXPECT_TRUE(_x == x);
+  x = -x;
+  EXPECT_TRUE(a == x);
+}
+
+TEST_F(Vec3Test, BracketOperator) {
+  float precision = FP_SP_EPSILON;
+  float a1 = 0.577030653156837;
+  float a2 = 0.464016202534924;
+  float a3 = 0.679106087611341;
+  float y = 1.123;
+  EXPECT_TRUE(fpEqual(a[0], a1, precision));
+  EXPECT_TRUE(fpEqual(a[1], a2, precision));
+  EXPECT_TRUE(fpEqual(a[2], a3, precision));
+  a[0] = y;
+  a[1] = y;
+  a[2] = y;
+  EXPECT_TRUE(fpEqual(a[0], y, precision));
+  EXPECT_TRUE(fpEqual(a[1], y, precision));
+  EXPECT_TRUE(fpEqual(a[2], y, precision));
+}
+
+TEST_F(Vec3Test, DotProduct) {
+  float precision = FP_SP_EPSILON;
+  float _x = 1.341281432334132;
+  float _y = 1.009460489128320;
+  float x = dot(a, b);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+  float y = dot(a, a);
+  EXPECT_TRUE(fpEqual(y, _y, precision));  
+}
+
+TEST_F(Vec3Test, CrossProduct) {
+  Vec3 _x = Vec3(-0.297343342759991, 0.088746610073140, 0.192011764685103);
+  Vec3 _y = Vec3(0.297343342759991, -0.088746610073140, -0.192011764685103);
+  Vec3 _z = Vec3(0.0, 0.0, 0.0);
+  Vec3 x = cross(a, b);
+  EXPECT_TRUE(x == _x);
+  Vec3 y = cross(b, a);
+  EXPECT_TRUE(y == _y);
+  Vec3 z = cross(a, a);
+  EXPECT_TRUE(z == _z);
+}
+
+TEST_F(Vec3Test, SquaredLength) {
+  float precision = FP_SP_EPSILON;
+  float _x = 1.009460489128320;
+  float x = squaredLength(a);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+
+TEST_F(Vec3Test, Length) {
+  float precision = FP_SP_EPSILON;
+  float _x = 1.004719109566609;
+  float x = length(a);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+
+TEST_F(Vec3Test, Normalize) {
+  Vec3 _x = Vec3(0.574320372393178, 0.461836744336514, 0.675916364230672);
+  Vec3 x = normalize(a);
+  EXPECT_TRUE(x == _x);
+}
+
+TEST_F(Vec3Test, Distance) {
+  float precision = FP_SP_EPSILON;
+  float _x = 0.490900055652479;
+  Vec3 v = b - a;
+  float x = length(v);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+
+TEST_F(Vec3Test, Angle) {
+  float precision = FP_SP_EPSILON;
+  float _x = 0.265629863091071;
+  float x = angleInRadians(a, b);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+
+
+class Vec4Test : public testing::Test{
+protected:
+  virtual void SetUp( ){
+    a = Vec4(0.834624519997676, 0.050843905697752, 0.580656945524675, 0.209013864371992);
+    b = Vec4(0.503136976949202, 0.502166404115286, 0.587205537155695, 0.750357447413078);
+    c = Vec4(0.374022704953088, 0.204014819459926, 0.066809844479659, 0.466645746933968);
+    d = Vec4(0.071401439320448, 0.793561052805261, 0.527665575465877, 0.225434676269768);
+    e = new Vec4(0.589475414960220, 0.712903374137218, 0.097413994806303, 0.630330254130685);
+    f = new Vec4(0.974145840503622, 0.981361844791386, 0.992332408791040, 0.659029395257233);
+    g = new Vec4(0.260844623846239, 0.483605055383677, 0.206742305179194, 0.883800600069613);
+
+    h = new Vec4(0.119199077335388, 0.357274934153236, 0.622028386236251, 0.653843755003646);
+  }
+  virtual void TearDown( ){
+    delete e;
+    delete f;
+    delete g;
+    delete h;
+  }
+  Vec4 a, b, c, d;
+  Vec4 *e, *f, *g, *h;
+};
+
+TEST_F(Vec4Test, Constructors) {
+  float precision = FP_SP_EPSILON;
+  EXPECT_EQ(4u, a.size());
+  EXPECT_TRUE(fpEqual(0.834624519997676f, a[0], precision));
+  EXPECT_TRUE(fpEqual(0.050843905697752f, a[1], precision));
+  EXPECT_TRUE(fpEqual(0.580656945524675f, a[2], precision));
+  EXPECT_TRUE(fpEqual(0.209013864371992f, a[3], precision));
+
+  EXPECT_EQ(4u, b.size());
+  EXPECT_TRUE(fpEqual(0.503136976949202f, b[0], precision));
+  EXPECT_TRUE(fpEqual(0.502166404115286f, b[1], precision));
+  EXPECT_TRUE(fpEqual(0.587205537155695f, b[2], precision));
+  EXPECT_TRUE(fpEqual(0.750357447413078f, b[3], precision));
+
+  b = Vec4(a);
+  
+  EXPECT_EQ(4u, b.size());
+  EXPECT_TRUE(fpEqual(0.834624519997676f, b[0], precision));
+  EXPECT_TRUE(fpEqual(0.050843905697752f, b[1], precision));
+  EXPECT_TRUE(fpEqual(0.580656945524675f, b[2], precision));
+  EXPECT_TRUE(fpEqual(0.209013864371992f, b[3], precision));
+  
+  EXPECT_EQ(4u, f->size());
+  EXPECT_TRUE(fpEqual(0.974145840503622f, (*f)[0], precision));
+  EXPECT_TRUE(fpEqual(0.981361844791386f, (*f)[1], precision));
+  EXPECT_TRUE(fpEqual(0.992332408791040f, (*f)[2], precision));
+  EXPECT_TRUE(fpEqual(0.659029395257233f, (*f)[3], precision));
+  
+  EXPECT_EQ(4u, g->size());
+  EXPECT_TRUE(fpEqual(0.260844623846239f, (*g)[0], precision));
+  EXPECT_TRUE(fpEqual(0.483605055383677f, (*g)[1], precision));
+  EXPECT_TRUE(fpEqual(0.206742305179194f, (*g)[2], precision));
+  EXPECT_TRUE(fpEqual(0.883800600069613f, (*g)[3], precision));
+  
+  delete g;
+  
+  g = new Vec4(f);
+  
+  EXPECT_EQ(4u, g->size());
+  EXPECT_TRUE(fpEqual(0.974145840503622f, (*g)[0], precision));
+  EXPECT_TRUE(fpEqual(0.981361844791386f, (*g)[1], precision));
+  EXPECT_TRUE(fpEqual(0.992332408791040f, (*g)[2], precision));
+  EXPECT_TRUE(fpEqual(0.659029395257233f, (*g)[3], precision));
+}
+
+
+TEST_F(Vec4Test, BooleanEquals) {
+  EXPECT_FALSE(a == b);
+  EXPECT_FALSE(b == c);
+  b = a;
+  EXPECT_TRUE(a == b);
+  EXPECT_TRUE(a == a);
+  
+  EXPECT_FALSE(*f == *g);
+  EXPECT_TRUE(*f == *f);
+  *f = *g;
+  EXPECT_TRUE(*f == *g);
+}
+
+TEST_F(Vec4Test, BooleanNotEquals) {
+  EXPECT_TRUE(a != b);
+  EXPECT_TRUE(b != c);
+  b = a;
+  EXPECT_FALSE(a != b);
+  EXPECT_FALSE(a != a);
+  
+  EXPECT_TRUE(*f != *g);
+  EXPECT_FALSE(*f != *f);
+  *f = *g;
+  EXPECT_FALSE(*f != *g);
+}
+
+TEST_F(Vec4Test, ArithmeticAddition) {
+  Vec4 _x = Vec4(1.337761496946878, 0.553010309813038, 1.167862482680371, 0.959371311785071);
+  Vec4 x = a + b;
+  EXPECT_TRUE(x == _x);
+  
+  Vec4 _y = Vec4(1.669249039995352, 0.101687811395504, 1.161313891049351, 0.418027728743985);
+  a += a;
+  EXPECT_TRUE(a == _y);
+}
+
+TEST_F(Vec4Test, ArithmeticSubtraction) {
+  Vec4 _x = Vec4(0.331487543048474, -0.451322498417534, -0.006548591631020, -0.541343583041086);
+  Vec4 x = a - b;
+  EXPECT_TRUE(x == _x);
+  
+  Vec4 _y = Vec4(0.0, 0.0, 0.0, 0.0);
+  a -= a;
+  EXPECT_TRUE(a == _y);
+  
+  Vec4 _z = Vec4(0.129114271996114, 0.298151584655360, 0.520395692676037, 0.283711700479110);
+  b -= c;
+  EXPECT_TRUE(b == _z);
+  
+}
+
+TEST_F(Vec4Test, ArithmeticMultiplication) {
+  Vec4 _x = Vec4(0.937283335957390, 0.057097706098576, 0.652077749824210, 0.234722569689747);
+  Vec4 x = a * 1.123;
+  EXPECT_TRUE(x == _x);
+  Vec4 y = 1.123f * a;
+  EXPECT_TRUE(y == _x);
+  a *= 1.123;
+  EXPECT_TRUE(a == _x);
+}
+
+TEST_F(Vec4Test, ArithmeticDivision) {
+  Vec4 _x = Vec4(0.393134488929664, 0.023949084172281, 0.273507746361128, 0.098452126411678);
+  Vec4 _y = Vec4(2.543658794023823, 41.755250130083141, 3.656203574869290, 10.157220940241512);
+  Vec4 x = a / 2.123f;
+  EXPECT_TRUE(x == _x);
+  Vec4 y = 2.123f / a;
+  EXPECT_TRUE(y == _y);
+  a /= 2.123;
+  EXPECT_TRUE(_x == a);
+}
+
+TEST_F(Vec4Test, ArithmeticNegation) {
+  Vec4 _x = Vec4(-0.834624519997676, -0.050843905697752, -0.580656945524675, -0.209013864371992);
+  EXPECT_TRUE(_x == -a);
+  Vec4 x = -a;
+  EXPECT_TRUE(_x == x);
+  x = -x;
+  EXPECT_TRUE(a == x);
+}
+
+TEST_F(Vec4Test, BracketOperator) {
+  float precision = FP_SP_EPSILON;
+  float a1 = 0.834624519997676;
+  float a2 = 0.050843905697752;
+  float a3 = 0.580656945524675;
+  float a4 = 0.209013864371992;
+  float y = 1.123;
+  EXPECT_TRUE(fpEqual(a[0], a1, precision));
+  EXPECT_TRUE(fpEqual(a[1], a2, precision));
+  EXPECT_TRUE(fpEqual(a[2], a3, precision));
+  EXPECT_TRUE(fpEqual(a[3], a4, precision));
+  a[0] = y;
+  a[1] = y;
+  a[2] = y;
+  a[3] = y;
+  EXPECT_TRUE(fpEqual(a[0], y, precision));
+  EXPECT_TRUE(fpEqual(a[1], y, precision));
+  EXPECT_TRUE(fpEqual(a[2], y, precision));
+  EXPECT_TRUE(fpEqual(a[3], y, precision));
+}
+
+TEST_F(Vec4Test, DotProduct) {
+  float precision = FP_SP_EPSILON;
+  float _x = 0.943262642518840;
+  float _y = 1.080032476013712;
+  float x = dot(a, b);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+  float y = dot(a, a);
+  EXPECT_TRUE(fpEqual(y, _y, precision));  
+}
+
+TEST_F(Vec4Test, SquaredLength) {
+  float precision = FP_SP_EPSILON;
+  float _x = 1.080032476013712;
+  float x = squaredLength(a);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+
+TEST_F(Vec4Test, Length) {
+  float precision = FP_SP_EPSILON;
+  float _x = 1.039246109453248;
+  float x = length(a);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+
+TEST_F(Vec4Test, Normalize) {
+  Vec4 _x = Vec4(0.803105744063623, 0.048923835495041, 0.558729005808029, 0.201120660900964);
+  Vec4 x = normalize(a);
+  EXPECT_TRUE(x == _x);
+}
+
+TEST_F(Vec4Test, Distance) {
+  float precision = FP_SP_EPSILON;
+  float _x = 0.778891358102187;
+  Vec4 v = b - a;
+  float x = length(v);
+  EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+

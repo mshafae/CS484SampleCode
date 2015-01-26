@@ -3,7 +3,7 @@ GFXMath README
 Michael Shafae
 mshafae at fullerton.edu
 
-1/24/2015
+1/25/2015
 
 Summary
 
@@ -25,4 +25,4 @@ To compile the program, run `make' on OS X and Linux or `gmake' on FreeBSD. The 
 The build depends on the PThreads library and the Google Test library. Pthreads is typically included with your development environment and the Google Test libraries are included in the Titan OpenGL Kit.
 
 **TLA VM Users: Release 20150119 is missing the Google Test libraries but
-includes the header files and source code. You can build it yourself now or wait a little bit until a solution is crafted.**
+includes the header files and source code. TLA VM release 20150125 has the library correctly installed.**

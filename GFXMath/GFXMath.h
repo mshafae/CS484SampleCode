@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *
- * $Id: GFXMath.h 5479 2015-01-25 01:23:30Z mshafae $
+ * $Id: GFXMath.h 5487 2015-01-26 09:14:49Z mshafae $
  *
  */
 
@@ -129,7 +129,7 @@ static T radiansToDegrees(T radians)
 class LPMRandom{
 public:
   LPMRandom( unsigned int seed = 1 ){
-    if(seed < 1 || seed > m){
+    if(seed < 1 || seed >= m){
       seed = 1234557890;
     }
     this->seed = seed;
@@ -272,11 +272,19 @@ public:
   }
   
   T& operator [](unsigned int i){
-    return data[i];
+    if( i < length ){
+      return data[i];
+    }else{
+      throw( "Index out of range" );
+    }
   }
   
   const T& operator [](unsigned int i) const{
-    return data[i];
+    if( i < length ){
+      return data[i];
+    }else{
+      throw( "Index out of range" );
+    }
   }
   
   bool operator ==(const VecN& rhs) const{
@@ -386,7 +394,7 @@ class TVec2 : public VecN<T, 2>{
 public:
   typedef VecN<T, 2> base;
   TVec2( ) : base( ){ }
-  explicit TVec2(const base& v) : base(v){ }
+  TVec2(const base& v) : base(v){ }
   explicit TVec2(const base* v) : base(v){ }
   explicit TVec2(T x, T y){
     base::data[0] = x;
@@ -399,7 +407,7 @@ class TVec3 : public VecN<T, 3>{
 public:
   typedef VecN<T, 3> base;
   TVec3( ) : base( ){ }
-  explicit TVec3(const base& v) : base(v){ }
+  TVec3(const base& v) : base(v){ }
   explicit TVec3(const base* v) : base(v){ }
   explicit TVec3(T x, T y, T z){
     base::data[0] = x;
@@ -419,7 +427,7 @@ class TVec4 : public VecN<T, 4>{
 public:
   typedef VecN<T, 4> base;
   TVec4( ) : base( ){ }
-  explicit TVec4(const base& v) : base(v){ }
+  TVec4(const base& v) : base(v){ }
   explicit TVec4(const base* v) : base(v){ }
   explicit TVec4(T x, T y, T z, T w){
     base::data[0] = x;
@@ -465,7 +473,7 @@ static const TVec3<T> operator /(T lhs, const TVec3<T>& rhs){
 
 template <typename T>
 static const TVec4<T> operator /(T lhs, const TVec4<T>& rhs){
-  return TVec3<T>(lhs / rhs[0], lhs / rhs[1], lhs / rhs[2], lhs / rhs[3]);
+  return TVec4<T>(lhs / rhs[0], lhs / rhs[1], lhs / rhs[2], lhs / rhs[3]);
 }
 
 template <typename T, int length>
@@ -473,12 +481,6 @@ static T dot(const VecN<T, length>& a, const VecN<T, length>& b){
   T rv(0);
   // Fill me in!
   return rv;
-}
-
-template <typename T>
-static VecN<T, 3> cross(const VecN<T, 3>& a, const VecN<T, 3>& b){
-  // Fill me in!
-  return TVec3<T>(0, 0, 0);
 }
 
 template <typename T, int length>
@@ -495,7 +497,7 @@ static T length(const VecN<T, length>& v){
 
 template <typename T, int _length>
 static VecN<T, _length> normalize(const VecN<T, _length>& v){
-  T rv;
+  VecN<T, _length> rv;
   // Fill me in!
   return rv;
 }
@@ -507,11 +509,37 @@ static T distance(const VecN<T, length>& a, const VecN<T, length>& b){
   return rv;
 }
 
-template <typename T, int length>
-static T angle(const VecN<T, length>& a, const VecN<T, length>& b){
+template <typename T>
+static T angleInRadians(const TVec2<T>& a, const TVec2<T>& b){
   T rv(0);
   // Fill me in!
   return rv;
+}
+
+template <typename T>
+static T angleInRadians(const TVec3<T>& a, const TVec3<T>& b){
+  T rv(0);
+  // Fill me in!
+  return rv;
+}
+
+template <typename T>
+static T angle(const TVec2<T>& a, const TVec2<T>& b){
+  // In degrees!
+  return radiansToDegrees(angleInRadians(a, b));
+}
+
+template <typename T>
+static T angle(const TVec3<T>& a, const TVec3<T>& b){
+  // In degrees!
+  return radiansToDegrees(angleInRadians(a, b));
+}
+
+
+template <typename T>
+static VecN<T, 3> cross(const VecN<T, 3>& a, const VecN<T, 3>& b){
+  // Fill me in!
+  return TVec3<T>(0, 0, 0);
 }
 
 template <typename T, int length>
