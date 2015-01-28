@@ -342,8 +342,7 @@ TEST_F(Vec1Test, Normalize) {
 TEST_F(Vec1Test, Distance) {
   float precision = FP_SP_EPSILON;
   float _x = 0.279725379631173;
-  Vec1 v = b - a;
-  float x = length(v);
+  float x = distance(a, b);
   EXPECT_TRUE(fpEqual(x, _x, precision));
 }
 
@@ -530,8 +529,7 @@ TEST_F(Vec2Test, Normalize) {
 TEST_F(Vec2Test, Distance) {
   float precision = FP_SP_EPSILON;
   float _x = 0.569614519826529;
-  Vec2 v = b - a;
-  float x = length(v);
+  float x = distance(a, b);
   EXPECT_TRUE(fpEqual(x, _x, precision));
 }
 
@@ -747,8 +745,7 @@ TEST_F(Vec3Test, Normalize) {
 TEST_F(Vec3Test, Distance) {
   float precision = FP_SP_EPSILON;
   float _x = 0.490900055652479;
-  Vec3 v = b - a;
-  float x = length(v);
+  float x = distance(a, b);
   EXPECT_TRUE(fpEqual(x, _x, precision));
 }
 
@@ -964,8 +961,7 @@ TEST_F(Vec4Test, Normalize) {
 TEST_F(Vec4Test, Distance) {
   float precision = FP_SP_EPSILON;
   float _x = 0.778891358102187;
-  Vec4 v = b - a;
-  float x = length(v);
+  float x = distance(a, b);
   EXPECT_TRUE(fpEqual(x, _x, precision));
 }
 

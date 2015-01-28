@@ -502,8 +502,8 @@ static VecN<T, _length> normalize(const VecN<T, _length>& v){
   return rv;
 }
 
-template <typename T, int length>
-static T distance(const VecN<T, length>& a, const VecN<T, length>& b){
+template <typename T, int _length>
+static T distance(const VecN<T, _length>& a, const VecN<T, _length>& b){
   T rv;
   // Fill me in!
   return rv;
