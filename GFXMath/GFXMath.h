@@ -37,6 +37,7 @@
 #define _USE_MATH_DEFINES 1
 #endif
 
+#include <cassert>
 #include <cmath>
 #include <iostream>
 #include <iomanip>
@@ -60,8 +61,19 @@
 template <typename T>
 static inline T sqr(T a)
 {
-    return a * a;
+  return a * a;
 }
+
+template <typename T>
+static inline T _pow(T a, unsigned int exponent)
+{
+  T product = T(1);
+  for(int i = 0; i < exponent; i++){
+    product *= a;
+  }
+  return product;
+}
+
 
 
 #ifndef MSGFX_FP
@@ -189,8 +201,8 @@ private:
 template <typename T, const int length>
 class VecN{
 public:
-  typedef class VecN<T,length> myType;
-  typedef T elementType;
+  typedef class VecN<T,length> this_t;
+  typedef T component_t;
 
   VecN( ){};
 
@@ -562,5 +574,451 @@ typedef TVec3<int> Vec3i;
 typedef TVec4<float> Vec4;
 typedef TVec4<double> Vec4d;
 typedef TVec4<int> Vec4i;
+
+
+template <typename T, const int w, const int h>
+class MatNM{
+public:
+  typedef class MatNM<T, w, h> this_t;
+  typedef class VecN<T, h> vec_t;
+  
+  MatNM( ) {};
+  
+  MatNM(const MatNM& rhs){
+    assign(rhs);
+  }
+  
+  explicit MatNM(const T s){
+    assign(s);
+  }
+  
+  explicit MatNM(const vec_t& v){
+    assign(v);
+  }
+  
+  explicit MatNM(const T* array){
+    assign(array);
+  }  
+  
+  MatNM& operator =(const this_t& rhs){
+    assign(rhs);
+    return *this;
+  }
+  
+  MatNM operator +(const this_t& rhs) const{
+    this_t sum;
+    // Fill me in!
+    return sum;
+  }
+  
+  this_t& operator +=(const this_t& rhs){
+    return (*this = *this + rhs);
+  }
+  
+  this_t operator -(const this_t& rhs) const{
+    this_t difference;
+    // Fill me in!
+    return difference;
+  }
+  
+  this_t& operator -=(const this_t& rhs){
+    return (*this = *this - rhs);
+  }
+  
+  this_t operator *(const T& rhs) const{
+    this_t product;
+    // Fill me in!
+    return product;
+  }
+  
+  this_t& operator *=(const T& rhs){
+    return (*this = *this * rhs);
+  }
+  
+  this_t operator *(const this_t& rhs){
+    this_t product;
+    // Fill me in!
+    return product;
+  }
+  
+  
+  this_t& operator *=(const this_t& rhs){
+    return (*this = *this * rhs);
+  }
+  
+  this_t operator /(const T& rhs) const{
+    this_t quotient;
+    // Fill me in!
+    return quotient;
+  }
+  
+  this_t& operator /=(const T& rhs){
+    return (*this = *this / rhs);
+  }
+  
+  bool operator ==(const this_t& rhs) const{
+    bool rv = false;
+    // Fill me in!
+    return rv;
+  }
+  
+  bool operator !=(const this_t& rhs) const{
+    return( ! (*this == rhs));
+  }
+  
+  const T operator ()(const size_t& col_i, const size_t& row_j) const{
+    return cols[col_i][row_j];
+  }
+  
+  T& operator ()(const size_t& col_i, const size_t& row_j){
+    return cols[col_i][row_j];
+  }
+  
+  vec_t& column(const size_t& col_i){
+    return cols[col_i];
+  }
+  
+  vec_t& operator [](const size_t& col_i){
+    return column(col_i);
+  }
+  
+  const vec_t& column(const size_t& col_i) const{
+    return cols[col_i];
+  }
+  
+  const vec_t& operator[](const size_t& col_i) const{
+    return column(col_i);
+  }
+    
+  VecN<T, w> row(const size_t& row_j) const{
+    T vals[w];
+    for(int i = 0; i < w; i++){
+      vals[i] = cols[i][row_j];
+    }
+    return VecN<T, h>(vals);
+  }
+  
+  operator T*( ){
+    return &cols[0][0];
+  }
+  
+  operator const T*( ) const{
+    return &cols[0][0];
+  }
+    
+  MatNM<T, h, w> transpose( ) const{
+    MatNM<T, h, w> rv;
+    // Fill me in!
+    return rv;
+  }
+    
+  static int width(void){
+    return w;
+  }
+  
+  static int height(void){
+    return h;
+  }
+  
+  std::ostream& write(std::ostream& out) const{
+    out.setf( std::ios::fixed );
+    out << std::setprecision(IOS_FP_PRECISION);
+    for(int i = 0; i < h; i++){
+      out << row(i) << std::endl; 
+    }
+    out.unsetf( std::ios::fixed );
+    return(out);
+  }
+  
+  std::ostream& description(std::ostream &out = std::cerr) const{
+    out << "<Mat" << w << "x" << h << " " << this << ">" << std::endl;
+    for( int i = 0; i < h; i++ ){
+      out << row(i) << std::endl; 
+    }
+    return(out);
+  }
+protected:
+  VecN<T, h> cols[w];
+  
+  void assign(const MatNM& rhs){
+    for(int i = 0; i < w; i++){
+      cols[i] = rhs.cols[i]; 
+    }
+  }
+  
+  void assign(const T s){
+    for(int i = 0; i < w; i++){
+      cols[i] = vec_t(s); 
+    }
+  }
+  
+  void assign(const vec_t& v){
+    for(int i = 0; i < w; i++){
+      cols[i] = v; 
+    }
+  }
+  
+  void assign(const T* a){
+    for(int i = 0; i < w; i++){
+      cols[i] = vec_t(a+(i*h)); 
+    }
+  }  
+}; // end class MatNM
+
+template <typename T, const int w>
+class MatN : public MatNM<T, w, w>{
+public:
+  typedef MatNM<T, w, w> base;
+  typedef MatN<T, w> this_t;
+        
+  void identity( ){
+    // Fill me in!
+  }
+  
+}; // end class MatN
+
+template <typename T>
+class TMat2 : public MatN<T, 2>{
+public:
+  typedef MatN<T, 2> base;
+  typedef TMat2<T> this_t;
+  TMat2( ) {}
+  TMat2(const this_t& m) : base(m) {}
+  TMat2(const base& m) : base(m) {}
+  TMat2(const T* array) : base(array) {}
+  TMat2(const VecN<T, 2>& v) : base(v) {}
+  TMat2(const VecN<T, 2>& a, const VecN<T, 2>& b){
+    base::cols[0] = a;
+    base::cols[1] = b;
+  }
+  TMat2(const T& a, const T& b, const T& c, const T& d){
+    base::cols[0] = TVec2<T>(a, b);
+    base::cols[1] = TVec2<T>(c, d);
+  }
+
+  double determinant( ){
+    // Fill me in!
+    return T(0);
+  }
+  
+  T minor(unsigned int row_i, unsigned int col_j){
+    // Fill me in!
+    return T(0);
+  }
+  
+  T cofactor(unsigned int row_i, unsigned int col_j){
+    // Fill me in!
+    return T(0);
+  }
+  
+  this_t adjugate( ){
+    this_t m;
+    // Fill me in!
+    return m;
+  }
+  
+  this_t inverse(double* det){
+    this_t m;
+    // Fill me in!
+    return m;
+  }
+  
+}; // end class TMat2
+
+
+template <typename T>
+class TMat3 : public MatN<T, 3>{
+public:
+  typedef MatN<T, 3> base;
+  typedef TMat3<T> this_t;
+  TMat3( ) {}
+  TMat3(const this_t& m) : base(m) {}
+  TMat3(const base& m) : base(m) {}
+  TMat3(const T* array) : base(array) {}
+  TMat3(const MatN<T, 2> m){
+    base::cols[0] = m[0];
+    base::cols[1] = m[1];
+    base::cols[2] = base::vec_t(0, 0, 0);
+  }
+  TMat3(const VecN<T, 3>& v) : base(v) {}
+  TMat3(const VecN<T, 3>& a, const VecN<T, 3>& b, const VecN<T, 3>& c){
+    base::cols[0] = a;
+    base::cols[1] = b;
+    base::cols[2] = c;
+  }
+  TMat3(const T& a, const T& b, const T& c, const T& d, const T& e, const T& f, const T& g, const T& h, const T& i){
+    base::cols[0] = TVec3<T>(a, b, c);
+    base::cols[1] = TVec3<T>(d, e, f);
+    base::cols[2] = TVec3<T>(g, h, i);
+  }
+  
+  double determinant( ){
+    // Fill me in!
+    return 0.0;
+  }
+  
+  TMat2<T> minor(unsigned int row_i, unsigned int col_j){
+    TMat2<T> m;
+    // Fill me in!
+    return m;
+  }
+  
+  this_t cofactor(unsigned int row_i, unsigned int col_j){
+    this_t m;
+    // Fill me in!
+    return m;
+  }
+  
+  this_t adjugate( ){
+    this_t m;
+    // Fill me in!
+    return m;
+  }
+  
+  this_t inverse(double* det){
+    this_t m;
+    // Fill me in!
+    return m;
+  }
+
+}; // end class TMat3
+
+template <typename T>
+class TMat4 : public MatN<T, 4>{
+public:
+  typedef MatN<T, 4> base;
+  typedef TMat4<T> this_t;
+  TMat4( ) {}
+  TMat4(const this_t& m) : base(m) {}
+  TMat4(const base& m) : base(m) {}
+  TMat4(const T* array) : base(array) {}
+  TMat4(const MatN<T, 3> m){
+    base::cols[0] = m[0];
+    base::cols[1] = m[1];
+    base::cols[2] = m[2];
+    base::cols[3] = base::vec_t(0, 0, 0, 0);
+  }
+  TMat4(const VecN<T, 4>& v) : base(v) {}
+  TMat4(const VecN<T, 4>& a, const VecN<T, 4>& b, const VecN<T, 4>& c, const VecN<T, 4>& d){
+    base::cols[0] = a;
+    base::cols[1] = b;
+    base::cols[2] = c;
+    base::cols[3] = d;
+  }
+  TMat4(const T& a, const T& b, const T& c, const T& d, const T& e, const T& f, const T& g, const T& h, const T& i, const T& j, const T& k, const T& l, const T& m, const T& n, const T& o, const T& p){
+    base::cols[0] = TVec4<T>(a, b, c, d);
+    base::cols[1] = TVec4<T>(e, f, g, h);
+    base::cols[2] = TVec4<T>(i, j, k, l);
+    base::cols[3] = TVec4<T>(m, n, o, p);
+  }
+  
+  double determinant( ){
+    return 0.0;
+  }
+  
+  TMat3<T> minor(unsigned int row_i, unsigned int col_j){
+    TMat3<T> m;
+    // Fill me in!
+    return m;
+  }
+  
+  this_t cofactor(unsigned int row_i, unsigned int col_j){
+    this_t m;
+    // Fill me in!
+    return m;
+  }
+  
+  this_t adjugate( ){
+    this_t m;
+    // Fill me in!
+    return m;
+  }
+  
+  this_t inverse(double* det){
+    this_t m;
+    // Fill me in!
+    return m;
+  }
+  
+}; // end class TMat4
+
+typedef TMat2<float> Mat2;
+typedef TMat2<int> iMat2;
+typedef TMat2<unsigned int> uMat2;
+typedef TMat2<double> dMat2;
+
+typedef TMat3<float> Mat3;
+typedef TMat3<int> iMat3;
+typedef TMat3<unsigned int> uMat3;
+typedef TMat3<double> dMat3;
+
+typedef TMat4<float> Mat4;
+typedef TMat4<int> iMat4;
+typedef TMat4<unsigned int> uMat4;
+typedef TMat4<double> dMat4;
+
+template <typename T, const int w, const int h>
+std::ostream& operator <<( std::ostream &out, const MatNM<T, w, h> &m ){
+  return(m.write( out ));
+}
+
+template <typename T, const int w1, const int h1, const int w2, const int h2>
+MatNM<T, w1, h2> operator *(const MatNM<T, w1, h1>& lhs, const MatNM<T, w2, h2>& rhs){
+  MatNM<T, w1, h2> product;
+  // Fill me in!
+  return product;
+}
+
+
+typedef struct ViewPort{
+  unsigned int width;
+  unsigned int height;
+}ViewPort;
+
+static Mat4 frustum(float left, float right, float bottom, float top, float near, float far){
+  assert(false);
+}
+
+static Mat4 perspective(float fovy, float aspect, float near, float far){
+  assert(false);
+}
+
+static Mat4 ortho(float left, float right, float bottom, float top, float near, float far){
+  assert(false);
+}
+
+static Mat4 rotate(float angleInDegrees, float axis_x, float axis_y, float axis_z){
+  assert(false);
+}
+
+static Mat4 rotate(float angleInDegrees, const Vec3& axis){
+  assert(false);
+}
+
+static Mat4 scale(float s){
+  assert(false);
+}
+
+static Mat4 scale(float x, float y, float z){
+  assert(false);
+}
+
+static Mat4 translate(float x, float y, float z){
+  assert(false);
+}
+
+static Mat4 lookat(const Vec3& eye, const Vec3& center, const Vec3& up){
+  assert(false);
+}
+
+static Vec3 project(const Vec3& objCoord, const Mat4& projection, const Mat4& viewing, ViewPort& vp){
+  assert(false);
+}
+
+static Vec3 unproject(const Vec3& winCoord, const Mat4& projection, const Mat4& viewing, ViewPort& vp){
+  assert(false);
+}
+
+
 
 #endif
