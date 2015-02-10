@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *
- * $Id: GFXMath.h 5487 2015-01-26 09:14:49Z mshafae $
+ * $Id: GFXMath.h 5509 2015-02-10 10:04:54Z mshafae $
  *
  */
 
@@ -214,6 +214,10 @@ public:
     assign(rhs);
   }
   
+  VecN(const T* array){
+    assign(array);
+  }
+  
   VecN(T const & s){
     for( int i = 0; i < length; i++ ){
       data[i] = s;
@@ -381,6 +385,13 @@ protected:
     }
   }
   
+  inline void assign(const T* array){
+    for( int i = 0; i < length; i++ ){
+      data[i] = array[i];
+    }
+  }
+  
+  
   inline void assign(const VecN* rhs){
     for( int i = 0; i < length; i++ ){
       data[i] = rhs->data[i];
@@ -490,7 +501,7 @@ static const TVec4<T> operator /(T lhs, const TVec4<T>& rhs){
 
 template <typename T, int length>
 static T dot(const VecN<T, length>& a, const VecN<T, length>& b){
-  T rv(0);
+  T rv = static_cast<T>(0);
   // Fill me in!
   return rv;
 }
@@ -514,8 +525,8 @@ static VecN<T, _length> normalize(const VecN<T, _length>& v){
   return rv;
 }
 
-template <typename T, int _length>
-static T distance(const VecN<T, _length>& a, const VecN<T, _length>& b){
+template <typename T, int length>
+static T distance(const VecN<T, length>& a, const VecN<T, length>& b){
   T rv;
   // Fill me in!
   return rv;
@@ -615,6 +626,12 @@ public:
     return (*this = *this + rhs);
   }
   
+  this_t operator -( ) const{
+    this_t rv;
+    // Fill me in!
+    return rv;
+  }
+  
   this_t operator -(const this_t& rhs) const{
     this_t difference;
     // Fill me in!
@@ -624,7 +641,7 @@ public:
   this_t& operator -=(const this_t& rhs){
     return (*this = *this - rhs);
   }
-  
+      
   this_t operator *(const T& rhs) const{
     this_t product;
     // Fill me in!
@@ -675,7 +692,11 @@ public:
   }
   
   vec_t& column(const size_t& col_i){
-    return cols[col_i];
+    if( col_i < w ){
+      return cols[col_i];
+    }else{
+      throw( "Index out of range" );
+    }
   }
   
   vec_t& operator [](const size_t& col_i){
@@ -683,7 +704,11 @@ public:
   }
   
   const vec_t& column(const size_t& col_i) const{
-    return cols[col_i];
+    if( col_i < w ){
+      return cols[col_i];
+    }else{
+      throw( "Index out of range" );
+    }
   }
   
   const vec_t& operator[](const size_t& col_i) const{
@@ -724,7 +749,7 @@ public:
     out.setf( std::ios::fixed );
     out << std::setprecision(IOS_FP_PRECISION);
     for(int i = 0; i < h; i++){
-      out << row(i) << std::endl; 
+      out << row(i); 
     }
     out.unsetf( std::ios::fixed );
     return(out);
@@ -770,11 +795,16 @@ class MatN : public MatNM<T, w, w>{
 public:
   typedef MatNM<T, w, w> base;
   typedef MatN<T, w> this_t;
-        
+  
+  MatN( ) : base( ) {}
+  MatN(const base& m) : base(m) {}
+  MatN(const T* array) : base(array) {}
+  MatN(const VecN<T, w>& v) : base(v) {}
+  
   void identity( ){
     // Fill me in!
   }
-  
+    
 }; // end class MatN
 
 template <typename T>
@@ -782,9 +812,10 @@ class TMat2 : public MatN<T, 2>{
 public:
   typedef MatN<T, 2> base;
   typedef TMat2<T> this_t;
-  TMat2( ) {}
+  TMat2( ) : base( ) {}
   TMat2(const this_t& m) : base(m) {}
   TMat2(const base& m) : base(m) {}
+  TMat2(const MatNM<T, 2, 2>& m) : base(m) {}
   TMat2(const T* array) : base(array) {}
   TMat2(const VecN<T, 2>& v) : base(v) {}
   TMat2(const VecN<T, 2>& a, const VecN<T, 2>& b){
@@ -796,17 +827,17 @@ public:
     base::cols[1] = TVec2<T>(c, d);
   }
 
-  double determinant( ){
+  T determinant( ){
     // Fill me in!
     return T(0);
   }
   
-  T minor(unsigned int row_i, unsigned int col_j){
+  T minor(unsigned int col_i, unsigned int row_j){
     // Fill me in!
-    return T(0);
+    return T(-1);
   }
   
-  T cofactor(unsigned int row_i, unsigned int col_j){
+  T cofactor(unsigned int col_i, unsigned int row_j){
     // Fill me in!
     return T(0);
   }
@@ -817,7 +848,7 @@ public:
     return m;
   }
   
-  this_t inverse(double* det){
+  this_t inverse( ){
     this_t m;
     // Fill me in!
     return m;
@@ -831,9 +862,10 @@ class TMat3 : public MatN<T, 3>{
 public:
   typedef MatN<T, 3> base;
   typedef TMat3<T> this_t;
-  TMat3( ) {}
+  TMat3( ) : base( ) {}
   TMat3(const this_t& m) : base(m) {}
   TMat3(const base& m) : base(m) {}
+  TMat3(const MatNM<T, 3, 3>& m) : base(m) {}
   TMat3(const T* array) : base(array) {}
   TMat3(const MatN<T, 2> m){
     base::cols[0] = m[0];
@@ -852,21 +884,19 @@ public:
     base::cols[2] = TVec3<T>(g, h, i);
   }
   
-  double determinant( ){
+  T determinant( ){
     // Fill me in!
     return 0.0;
   }
   
-  TMat2<T> minor(unsigned int row_i, unsigned int col_j){
-    TMat2<T> m;
+  T minor(unsigned int col_i, unsigned int row_j){
     // Fill me in!
-    return m;
+    return T(-1);
   }
   
-  this_t cofactor(unsigned int row_i, unsigned int col_j){
-    this_t m;
+  T cofactor(unsigned int col_i, unsigned int row_j){
     // Fill me in!
-    return m;
+    return T(0);
   }
   
   this_t adjugate( ){
@@ -875,7 +905,7 @@ public:
     return m;
   }
   
-  this_t inverse(double* det){
+  this_t inverse( ){
     this_t m;
     // Fill me in!
     return m;
@@ -888,9 +918,10 @@ class TMat4 : public MatN<T, 4>{
 public:
   typedef MatN<T, 4> base;
   typedef TMat4<T> this_t;
-  TMat4( ) {}
+  TMat4( ) : base( ) {}
   TMat4(const this_t& m) : base(m) {}
   TMat4(const base& m) : base(m) {}
+  TMat4(const MatNM<T, 4, 4>& m) : base(m) {}
   TMat4(const T* array) : base(array) {}
   TMat4(const MatN<T, 3> m){
     base::cols[0] = m[0];
@@ -912,20 +943,23 @@ public:
     base::cols[3] = TVec4<T>(m, n, o, p);
   }
   
-  double determinant( ){
-    return 0.0;
+  this_t transpose( ) const{
+    return base::transpose( );
   }
   
-  TMat3<T> minor(unsigned int row_i, unsigned int col_j){
-    TMat3<T> m;
+  T determinant( ){
     // Fill me in!
-    return m;
+    return T(0);
   }
   
-  this_t cofactor(unsigned int row_i, unsigned int col_j){
-    this_t m;
+  T minor(unsigned int col_i, unsigned int row_j){
     // Fill me in!
-    return m;
+    return T(-1);
+  }
+  
+  T cofactor(unsigned int col_i, unsigned int row_j){
+    // Fill me in!
+    return T(0);
   }
   
   this_t adjugate( ){
@@ -934,10 +968,29 @@ public:
     return m;
   }
   
-  this_t inverse(double* det){
+  this_t inverse( ){
     this_t m;
     // Fill me in!
     return m;
+  }
+
+private:
+  TVec4<T> _cross4(const TVec4<T>& u, const TVec4<T>& v, const TVec4<T>& w){
+    T a, b, c, d, e, f;
+    a = (v[0] * w[1]) - (v[1] * w[0]);
+    b = (v[0] * w[2]) - (v[2] * w[0]);
+    c = (v[0] * w[3]) - (v[3] * w[0]);
+    d = (v[1] * w[2]) - (v[2] * w[1]);
+    e = (v[1] * w[3]) - (v[3] * w[1]);
+    f = (v[2] * w[3]) - (v[3] * w[2]);
+
+    TVec4<T> n = TVec4<T>(
+      (u[1] * f) - (u[2] * e) + (u[3] * d), 
+    - (u[0] * f) + (u[2] * c) - (u[3] * b), 
+      (u[0] * e) - (u[1] * c) + (u[3] * a), 
+    - (u[0] * d) + (u[1] * b) - (u[2] * a)
+    );
+    return n;
   }
   
 }; // end class TMat4
@@ -969,56 +1022,89 @@ MatNM<T, w1, h2> operator *(const MatNM<T, w1, h1>& lhs, const MatNM<T, w2, h2>&
   return product;
 }
 
-
-typedef struct ViewPort{
-  unsigned int width;
-  unsigned int height;
-}ViewPort;
-
-static Mat4 frustum(float left, float right, float bottom, float top, float near, float far){
-  assert(false);
+template <typename T, const int w, const int h>
+static const MatNM<T, w, h> operator *(T lhs, const MatNM<T, w, h>& rhs){
+  return rhs * lhs;
 }
 
-static Mat4 perspective(float fovy, float aspect, float near, float far){
-  assert(false);
+
+class ViewPort{
+  ViewPort( unsigned int width = 0, unsigned int height = 0 ) : _width(width), _height(height) {}
+  unsigned int width( ){
+    return _width;
+  }
+  unsigned int height( ){
+    return _height;
+  }
+protected:
+  unsigned int _width;
+  unsigned int _height;
+};
+
+static Mat4 frustum(float left, float right, float bottom, float top, float near, float far){
+  Mat4 m;
+  // Fill me in!  
+  return m;
+}
+
+static Mat4 perspective(float fovy_in_Y_direction, float aspect, float near, float far){
+  Mat4 m;
+  // Fill me in!  
+  return m;
 }
 
 static Mat4 ortho(float left, float right, float bottom, float top, float near, float far){
-  assert(false);
+  Mat4 m;
+  // Fill me in!  
+  return m;
 }
 
 static Mat4 rotate(float angleInDegrees, float axis_x, float axis_y, float axis_z){
-  assert(false);
+  Mat4 m;
+  // Fill me in!  
+  return m;
 }
 
 static Mat4 rotate(float angleInDegrees, const Vec3& axis){
-  assert(false);
+  return rotate(angleInDegrees, axis[0], axis[1], axis[2]);
 }
 
 static Mat4 scale(float s){
-  assert(false);
+  Mat4 m;
+  // Fill me in!  
+  return m;
 }
 
 static Mat4 scale(float x, float y, float z){
-  assert(false);
+  Mat4 m;
+  // Fill me in!  
+  return m;
+}
+
+static Mat4 scale(const Vec3& v){
+  float x = v[0];
+  float y = v[1];
+  float z = v[2];
+  return scale(x, y, z);
 }
 
 static Mat4 translate(float x, float y, float z){
-  assert(false);
+  Mat4 m;
+  // Fill me in!  
+  return m;
+}
+
+static Mat4 translate(const Vec3& v){
+  float x = v[0];
+  float y = v[1];
+  float z = v[2];
+  return translate(x, y, z);
 }
 
 static Mat4 lookat(const Vec3& eye, const Vec3& center, const Vec3& up){
-  assert(false);
+  Mat4 m;
+  // Fill me in!  
+  return m;
 }
 
-static Vec3 project(const Vec3& objCoord, const Mat4& projection, const Mat4& viewing, ViewPort& vp){
-  assert(false);
-}
-
-static Vec3 unproject(const Vec3& winCoord, const Mat4& projection, const Mat4& viewing, ViewPort& vp){
-  assert(false);
-}
-
-
-
-#endif
+#endif // End GFXMath.h
