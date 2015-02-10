@@ -36,6 +36,12 @@
 
 #include <gtest/gtest.h>
 
+#ifdef __linux__
+#ifdef minor
+#undef minor
+#endif
+#endif
+
 TEST(GFXMath_FP_Test, fpEqual) {
   float precision_1 = FP_SP_EPSILON;
   float precision_2 = 1e-5;
