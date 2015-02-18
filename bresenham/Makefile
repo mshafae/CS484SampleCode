@@ -26,7 +26,7 @@ TARGET = bresenham
 CXXFILES =   bresenham.cpp
 CFILES =  
 # Headers
-HEADERS =  
+HEADERS =   GLFWApp.h
 
 OBJECTS = $(CXXFILES:.cpp=.o) $(CFILES:.c=.o)
 
