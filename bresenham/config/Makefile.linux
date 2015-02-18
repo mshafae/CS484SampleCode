@@ -13,8 +13,8 @@
 #
 CC=clang
 CXX=clang++
-#OPENGL_KIT_HOME = ${HOME}/winhomedir/local
-CFLAGS += -g -DNDEBUG -Wall -pedantic -pipe -I/opt/local/include -L/opt/local/lib
-LDFLAGS += -g -Wall -pipe 
-LLDLIBS += -lglfw3 -lGL -lGLU -lX11 -lXxf86vm -lXrandr -lpthread -lXi -lGLEW
+OPENGL_KIT_HOME = ${HOME}/local/TitanOpenGLKit
+CFLAGS += -g -DNDEBUG -Wall -pedantic -pipe -std=c++11 -I/opt/local/include -I${OPENGL_KIT_HOME}
+LDFLAGS += -g -Wall -pipe -L/opt/local/lib
+LLDLIBS += -lGL -lX11 -lGLU -lglfw3 -lXxf86vm -lpthread -lXrandr -lGLEW -lXi -lfreeimage
 

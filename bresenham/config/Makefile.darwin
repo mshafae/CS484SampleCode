@@ -14,5 +14,5 @@
 OPENGL_KIT_HOME = ${HOME}/local/TitanOpenGLKit
 CFLAGS += -g -DNDEBUG -Wall -pedantic -pipe -I ${OPENGL_KIT_HOME}/include
 LDFLAGS += -g -Wall -pipe -L ${OPENGL_KIT_HOME}/lib
-LLDLIBS += -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework QuartzCore -lGLEW
+LLDLIBS += -lglfw3 -framework Cocoa -framework OpenGL -framework IOKit -framework QuartzCore -lGLEW -lstdc++
 
