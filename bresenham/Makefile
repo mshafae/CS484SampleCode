@@ -4,7 +4,7 @@
 # Michael Shafae
 # mshafae at fullerton.edu
 #
-# $Id: Makefile 4830 2014-02-13 09:09:42Z mshafae $
+# $Id: Makefile 5535 2015-02-17 11:06:10Z mshafae $
 #
 # It depends on the config.guess program that is in the config directory
 # to guess what configuration to use for the build.
@@ -23,7 +23,7 @@ endif
 
 TARGET = bresenham
 # C++ Files
-CXXFILES =   bresenham_glfw.cpp
+CXXFILES =   bresenham.cpp
 CFILES =  
 # Headers
 HEADERS =  
