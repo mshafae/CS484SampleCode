@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *
- * $Id: GFXMath_Test.cpp 5509 2015-02-10 10:04:54Z mshafae $
+ * $Id: GFXMath_Test.cpp 5617 2015-03-25 08:25:08Z mshafae $
  *
  */
 
@@ -335,6 +335,13 @@ TEST_F(Vec1Test, Distance) {
   EXPECT_TRUE(fpEqual(x, _x, precision));
 }
 
+TEST_F(Vec1Test, ConstPtr) {
+  float *x = (float*)a;
+  for(int i = 0; i < a.size( ); i++){
+    EXPECT_TRUE(x[i] == a[i]);
+  }
+}
+
 
 class Vec2Test : public testing::Test{
 protected:
@@ -530,6 +537,12 @@ TEST_F(Vec2Test, Angle) {
   EXPECT_TRUE(fpEqual(x, _x, precision));
 }
 
+TEST_F(Vec2Test, ConstPtr) {
+  float *x = (float*)a;
+  for(int i = 0; i < a.size( ); i++){
+    EXPECT_TRUE(x[i] == a[i]);
+  }
+}
 
 class Vec3Test : public testing::Test{
 protected:
@@ -738,6 +751,13 @@ TEST_F(Vec3Test, Distance) {
   Vec3 v = b - a;
   float x = length(v);
   EXPECT_TRUE(fpEqual(x, _x, precision));
+}
+
+TEST_F(Vec3Test, ConstPtr) {
+  float *x = (float*)a;
+  for(int i = 0; i < a.size( ); i++){
+    EXPECT_TRUE(x[i] == a[i]);
+  }
 }
 
 TEST_F(Vec3Test, Angle) {
@@ -957,6 +977,13 @@ TEST_F(Vec4Test, Distance) {
   EXPECT_TRUE(fpEqual(x, _x, precision));
 }
 
+TEST_F(Vec4Test, ConstPtr) {
+  float *x = (float*)a;
+  for(int i = 0; i < a.size( ); i++){
+    EXPECT_TRUE(x[i] == a[i]);
+  }
+}
+
 class Mat2Test : public testing::Test{
 protected:
   virtual void SetUp( ){
@@ -1174,6 +1201,14 @@ TEST_F(Mat2Test, Inverse) {
   EXPECT_TRUE(x == _x);
 }
 
+TEST_F(Mat2Test, ConstPtr) {
+  float *x = (float*)a;
+  for(int i = 0; i < a.width( ); i++){
+    for(int j = 0; j < a.height( ); j++){
+      EXPECT_TRUE(x[(i * a.width()) + j] == a(i, j));
+    }
+  }
+}
 
 class Mat3Test : public testing::Test{
 protected:
@@ -1436,6 +1471,14 @@ TEST_F(Mat3Test, Inverse) {
   EXPECT_TRUE(x == _x);
 }
 
+TEST_F(Mat3Test, ConstPtr) {
+  float *x = (float*)a;
+  for(int i = 0; i < a.width( ); i++){
+    for(int j = 0; j < a.height( ); j++){
+      EXPECT_TRUE(x[(i * a.width()) + j] == a(i, j));
+    }
+  }
+}
 
 class Mat4Test : public testing::Test{
 protected:
@@ -1625,8 +1668,12 @@ TEST_F(Mat4Test, ArithmeticSubtraction) {
 TEST_F(Mat4Test, ArithmeticMultiplication) {
   Mat4 _x = Mat4(0.623823092497053, 1.390188988776151, 1.182061837698644, 1.315791964897023, 0.190660064969446, 0.744065816276781, 0.749660103869878, 0.914781170492959, 0.706769038052893, 1.000661882334202, 0.971602934275384, 1.167950663952667, 0.889155281678702, 0.734262555953918, 0.783632546013919, 0.978919788952303);
   Mat4 _y = Mat4(0.181534598832067, 3.090063036225575, 1.751301123013890, 1.548129983962520, 2.677950538155930, 0.602542419934158, 0.703144584600769, 0.182768447566460, 1.548579944363598, 2.561450494821226, 1.708441443586890, 2.969548853288476, 0.222810079187470, 0.731926991734338, 2.087669584796218, 2.828057891650094);
+  Vec4 v = Vec4(0.834624519997676, 0.050843905697752, 0.580656945524675, 0.209013864371992);
+  Vec4 _v = Vec4(0.394901321670414, 1.360691841508126, 0.936735529810221, 1.157966440996864);
   Mat4 x = a * b;
   EXPECT_TRUE(x == _x);
+  Vec4 q = a * v;
+  EXPECT_TRUE(q == _v);
   Mat4 y = a * 3.1234f;
   EXPECT_TRUE(y == _y);
   Mat4 z = 3.1234f * a;
@@ -1749,6 +1796,16 @@ TEST_F(Mat4Test, Inverse) {
   Mat4 x = a.inverse( );
   EXPECT_TRUE(x == _x);
 }
+
+TEST_F(Mat4Test, ConstPtr) {
+  float *x = (float*)a;
+  for(int i = 0; i < a.width( ); i++){
+    for(int j = 0; j < a.height( ); j++){
+      EXPECT_TRUE(x[(i * a.width()) + j] == a(i, j));
+    }
+  }
+}
+
 
 TEST(HelperFunctions, SQR) {
   float precision = FP_SP_EPSILON;
