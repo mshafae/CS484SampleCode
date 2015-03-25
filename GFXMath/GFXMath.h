@@ -1022,6 +1022,13 @@ MatNM<T, w1, h2> operator *(const MatNM<T, w1, h1>& lhs, const MatNM<T, w2, h2>&
   return product;
 }
 
+template <typename T, const int w>
+static const VecN<T, w> operator *(const MatNM<T, w, w>& lhs, VecN<T, w> rhs){
+  VecN<T, w> product;
+  // Fill me in!
+  return product;
+}
+
 template <typename T, const int w, const int h>
 static const MatNM<T, w, h> operator *(T lhs, const MatNM<T, w, h>& rhs){
   return rhs * lhs;
