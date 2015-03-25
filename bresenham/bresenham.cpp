@@ -27,6 +27,15 @@
 #include <cmath>
 #include <cstring>
 
+#ifdef __linux__
+#ifdef minor
+#undef minor
+#endif
+#ifdef major
+#undef major
+#endif
+#endif
+
 #include "GFXMath.h"
 #include "GLFWApp.h"
 
