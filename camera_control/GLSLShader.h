@@ -1,12 +1,31 @@
 /*
- * Copyright (c) 2005-2008 Michael Shafae.
+ * Copyright (c) 2005-2015 Michael Shafae.
  * All rights reserved.
  *
- * This program is distributed in the hope that it will be useful, but
- * WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met: 
+ * 
+ * 1. Redistributions of source code must retain the above copyright
+ *    notice, this list of conditions and the following disclaimer.
+ * 
+ * 2. Redistributions in binary form must reproduce the above copyright
+ *    notice, this list of conditions and the following disclaimer in the
+ *    documentation and/or other materials provided with the distribution.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+ * IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED
+ * TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+ * PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
- * $Id: GLSLShader.h 4915 2014-04-10 07:05:10Z mshafae $
+ * $Id: GLSLShader.h 5624 2015-03-26 06:12:02Z mshafae $
  *
  * Utility functions for loading a shader.
  *
@@ -43,11 +62,38 @@
 
 bool _msglError( FILE *out, const char *filename, int line ){
   bool ret = false;
+  std::string errorString;
   GLenum err = glGetError( );
   while( err != GL_NO_ERROR ) {
     ret = true;
-    fprintf( out, "GL ERROR:%s:%d: %s\n",
-      filename, line, (char*)gluErrorString( err ) );
+    switch(err){
+    case GL_INVALID_ENUM:
+      errorString = "GL_INVALID_ENUM";
+      break;
+    case GL_INVALID_VALUE:
+      errorString = "GL_INVALID_VALUE";
+      break;
+    case GL_INVALID_OPERATION:
+      errorString = "GL_INVALID_OPERATION";
+      break;
+    case GL_STACK_OVERFLOW:
+      errorString = "GL_STACK_OVERFLOW";
+      break;
+    case GL_STACK_UNDERFLOW:
+      errorString = "GL_STACK_UNDERFLOW";
+      break;
+    case GL_TABLE_TOO_LARGE:
+      errorString = "GL_TABLE_TOO_LARGE";
+      break;
+    case GL_INVALID_FRAMEBUFFER_OPERATION:
+      // OpenGL 3.0 and later
+      errorString = "GL_INVALID_FRAMEBUFFER_OPERATION";
+      break;
+    case GL_OUT_OF_MEMORY:
+      errorString = "GL_OUT_OF_MEMORY";
+      break;
+    }
+    fprintf(stderr, "%s:%d:GL ERROR(%d): %s\n", filename, line, err, errorString.c_str( ));
     err = glGetError( );
   }
   return( ret );
@@ -209,6 +255,7 @@ public:
   }
 
   bool detach( GLuint shaderName ){
+    msglError( );
     glDetachShader( _object, shaderName );
     return( !msglError( ) );
   }

@@ -1,10 +1,10 @@
 #
-# GNU Makefile for the camera_control_glut project
+# GNU Makefile for the hello_glut project
 #
 # Michael Shafae
 # mshafae at fullerton.edu
 #
-# $Id: Makefile 4894 2014-04-07 05:08:37Z mshafae $
+# $Id: Makefile 5618 2015-03-25 08:48:16Z mshafae $
 #
 # It depends on the config.guess program that is in the config directory
 # to guess what configuration to use for the build.
@@ -21,12 +21,12 @@ $(error "Platform '$(SYSTEM)' not supported")
 endif
 
 
-TARGET = cameracontrol
+TARGET = camera_control
 # C++ Files
-CXXFILES =   camera_control_glfw.cpp transformations.cpp glut_teapot.cpp
+CXXFILES =   camera_control_glfw.cpp glut_teapot.cpp transformations.cpp
 CFILES =  
 # Headers
-HEADERS =  GLSLShader.h glut_teapot.h
+HEADERS =  
 
 OBJECTS = $(CXXFILES:.cpp=.o) $(CFILES:.c=.o)
 
