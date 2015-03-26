@@ -16,7 +16,7 @@
 #define _TRANSFORMATIONS_H_
 
 // This is for testing, just ignore it.
-#define __SOLUTION__
+//#define __SOLUTION__
 
 /*
  * rotateCameraLeft( ) rotates the coordinate system defined by
