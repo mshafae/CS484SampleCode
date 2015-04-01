@@ -30,6 +30,8 @@
  *
  */
 
+#pragma clang diagnostic ignored "-Wunused-function"
+
 #ifndef _GFXMATH_H_
 #define _GFXMATH_H_
 #ifdef WIN32
@@ -111,13 +113,13 @@ static inline T _pow(T a, unsigned int exponent)
 #define FP_DP_EPSILON 1e-15
 
 template <typename T>
-static bool fpEqual(T a, T b, T epsilon)
+static bool fpEqual(T a, T b, double epsilon)
 {
   return (a == b) || ((a - epsilon) < b && (a + epsilon) > b);
 }
 
 template <typename T>
-static bool fpNotEqual(T a, T b, T epsilon)
+static bool fpNotEqual(T a, T b, double epsilon)
 {
   return (a != b) && ((a - epsilon) > b || (a + epsilon) < b);
 }
@@ -328,7 +330,11 @@ public:
     return length;
   }
   
-  operator const T* ( ) const{
+  operator T*( ){
+    return &data[0];
+  }
+
+  operator const T*( ) const{
     return &data[0];
   }
   
@@ -431,6 +437,10 @@ public:
   explicit TVec2(T x, T y){
     base::data[0] = x;
     base::data[1] = y;
+  }
+  base perp( ){
+    // Fill me in!
+    return base(0, 0);
   }
 }; // end class TVec2
 
@@ -1121,6 +1131,33 @@ static Mat4 lookat(const Vec3& eye, const Vec3& center, const Vec3& up){
   Mat4 m;
   // Fill me in!  
   return m;
+}
+
+static bool project(const Vec3& objCoord, const Mat4& projection, const Mat4& modeling, ViewPort& vp, Vec3* winCoord){
+  // Fill me in!
+  return false;
+}
+
+static bool unproject(const Vec3& winCoord, const Mat4& projection, const Mat4& modeling, ViewPort& vp, Vec3* objCoord){
+  // Fill me in!
+  return false;
+}
+
+static bool unproject4(const Vec3& winCoord, float clipw, const Mat4& projection, const Mat4& modeling, ViewPort& vp, float near, float far, Vec4* objCoord){
+  // Fill me in!
+  return false;
+}
+
+template <typename T>
+TVec3<T> reflect(TVec3<T>& direction, TVec3<T>& normal){
+  // Fill me in!
+  return TVec3<T>(0, 0);
+}
+
+template <typename T>
+TVec4<T> reflect(TVec4<T>& direction, TVec4<T>& normal){
+  // Fill me in!
+  return TVec4<T>(0, 0);
 }
 
 #endif // End GFXMath.h
