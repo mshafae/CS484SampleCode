@@ -42,6 +42,15 @@
 #include <iostream>
 #include <iomanip>
 
+#ifdef __linux__
+#ifdef minor
+#undef minor
+#endif
+#ifdef major
+#undef major
+#endif
+#endif
+
 #ifndef IOS_FP_PRECISION
 #define IOS_FP_PRECISION 5
 #endif
