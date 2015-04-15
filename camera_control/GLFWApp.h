@@ -26,7 +26,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  *
- * $Id: GLFWApp.h 5624 2015-03-26 06:12:02Z mshafae $
+ * $Id: GLFWApp.h 5653 2015-04-03 22:33:08Z mshafae $
  *
  * STUDENTS DO NOT NEED TO MAKE ANY CHANGES TO THIS FILE.
  *
@@ -56,6 +56,8 @@
 
 #include <iostream>
 #include <string>
+
+#include <FreeImage.h>
 
 #include <GL/glew.h>
 
@@ -129,6 +131,7 @@ class GLFWApp{
       glewExperimental = GL_TRUE;
       glewInit( );
       sync(VSYNC);
+    	FreeImage_Initialise( );
       assert(checkGLError("Constructor"));
     }else{
       fprintf(stderr, "Failed constructor (%d, %d)\n", _myGLVersion( ), _reportedGLVersion( ));
@@ -136,10 +139,11 @@ class GLFWApp{
     }
   }
 
-  virtual ~GLFWApp( ){    
+  virtual ~GLFWApp( ){
     if(_window){
       glfwDestroyWindow(_window);
     }
+  	FreeImage_DeInitialise( );
     glfwTerminate( );
   }
 
@@ -195,6 +199,17 @@ class GLFWApp{
     glfwGetFramebufferSize(_window, &x, &y);
     return Vec2i(x, y);
   }
+  
+  int windowWidth( ) const{
+    Vec2i w = windowSize( );
+    return w[0];
+  }
+  
+  int windowHeight( ) const{
+    Vec2i w = windowSize( );
+    return w[1];
+  }
+  
 
   GLFWwindow* window( ){
     return _window;

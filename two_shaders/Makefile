@@ -1,10 +1,10 @@
 #
-# GNU Makefile for the hello_glut project
+# GNU Makefile for the two_shaders_glfw project
 #
 # Michael Shafae
 # mshafae at fullerton.edu
 #
-# $Id: Makefile 5650 2015-04-03 21:44:43Z mshafae $
+# $Id: Makefile 5721 2015-04-15 22:19:46Z mshafae $
 #
 # It depends on the config.guess program that is in the config directory
 # to guess what configuration to use for the build.
@@ -23,12 +23,12 @@ $(error "Platform '$(SYSTEM)' not supported")
 endif
 
 
-TARGET = camera_control
+TARGET = twoshaders
 # C++ Files
-CXXFILES =   camera_control_glfw.cpp glut_teapot.cpp transformations.cpp
+CXXFILES =   two_shaders_glfw.cpp transformations.cpp glut_teapot.cpp
 CFILES =  
 # Headers
-HEADERS =  
+HEADERS =  GFXMath.h GLFWApp.h GLSLShader.h glut_teapot.h transformations.h
 
 OBJECTS = $(CXXFILES:.cpp=.o) $(CFILES:.c=.o)
 
