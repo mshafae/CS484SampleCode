@@ -1,0 +1,3 @@
+[submodule "TitanOpenGLKit"]
+	path = TitanOpenGLKit
+	url = https://github.com/mshafae/TitanOpenGLKit
